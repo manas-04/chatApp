@@ -6,7 +6,8 @@ import '../chats/messages.dart';
 import '../chats/newMessage.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+  // final bool isLoading;
+  const ChatScreen();
 
   @override
   Widget build(BuildContext context) {

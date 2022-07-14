@@ -7,10 +7,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../screens/chatScreen.dart';
+
 import '../widgets/auth/authForm.dart';
 
 class AuthScreen extends StatefulWidget {
-  const AuthScreen({Key? key}) : super(key: key);
+  static const String routeName = '/AuthScreen';
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -39,9 +41,6 @@ class _AuthScreenState extends State<AuthScreen> {
             )
             .then((value) => null)
             .catchError((error) {
-          setState(() {
-            _isLoading = false;
-          });
           Fluttertoast.showToast(msg: error!.message);
         });
       } else {
@@ -74,30 +73,46 @@ class _AuthScreenState extends State<AuthScreen> {
             print(error);
           });
         }).catchError((error) {
-          setState(() {
-            _isLoading = false;
-          });
           Fluttertoast.showToast(msg: error!.message);
         });
       }
     } catch (error) {
-      setState(() {
-        _isLoading = false;
-      });
       Fluttertoast.showToast(msg: error.toString());
     }
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   // ignore: prefer_final_fields
-  bool _isLogin = true;
+  // bool _isLogin = true;
+
+  @override
+  void didChangeDependencies() {
+    setState(() {
+      _isLoading = false;
+    });
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // ignore: prefer_const_constructors
-      body: SingleChildScrollView(
-        child: AuthForm(_submitAuthForm, _isLoading, _isLogin),
-      ),
+    final routeArgs = ModalRoute.of(context)!.settings.arguments as bool;
+
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ChatScreen();
+        } else {
+          return Scaffold(
+            // ignore: prefer_const_constructors
+            body: SingleChildScrollView(
+              child: AuthForm(_submitAuthForm, _isLoading, routeArgs),
+            ),
+          );
+        }
+      },
     );
   }
 }

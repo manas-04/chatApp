@@ -236,7 +236,7 @@ class _AuthFormState extends State<AuthForm> {
                             },
                             child: Text(
                               widget._isLogin
-                                  ? 'Create New Account.'
+                                  ? "Dont't have an account ? SignUp."
                                   : 'Already have an Account.',
                               style: const TextStyle(
                                 color: Colors.blue,
