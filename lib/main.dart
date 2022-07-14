@@ -2,6 +2,7 @@
 
 import 'package:chat_app/screens/chatScreen.dart';
 import 'package:chat_app/screens/welcomePage.dart';
+import 'package:chat_app/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,20 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme:
-            ColorScheme.fromSwatch(primarySwatch: Colors.pink).copyWith(
-          secondary: Colors.deepPurple,
-//          brightness: Brightness.dark,
-        ),
-        buttonTheme: ButtonTheme.of(context).copyWith(
-          buttonColor: Colors.pink,
-          textTheme: ButtonTextTheme.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-        ),
-      ),
+      theme: lightThemeData(context),
       routes: {
         AuthScreen.routeName: (context) => AuthScreen(),
       },

@@ -7,7 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../auth/userImagePicker.dart';
-import '../button.dart';
+import '../components/button.dart';
 import '../titleSection.dart';
 
 // ignore: must_be_immutable

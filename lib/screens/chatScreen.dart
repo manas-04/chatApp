@@ -1,75 +1,63 @@
-// ignore_for_file: file_names, avoid_unnecessary_containers
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: file_names, avoid_unnecessary_containers, use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+import '../widgets/components/filledOutButton.dart';
 import '../chats/messages.dart';
 import '../chats/newMessage.dart';
+import '../widgets/components/logOutDialogBox.dart';
 
 class ChatScreen extends StatelessWidget {
-  // final bool isLoading;
   const ChatScreen();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Sandesh'),
-        centerTitle: true,
         actions: [
-          DropdownButton(
-            icon: const Icon(
-              Icons.more_vert,
-              color: Colors.white,
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.search),
+          ),
+          IconButton(
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => const LogOutDialogBox(),
             ),
-            items: [
-              DropdownMenuItem(
-                child: Container(
-                  child: Row(
-                    children: const [
-                      Icon(
-                        Icons.logout,
-                        color: Colors.black,
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text('Logout'),
-                    ],
-                  ),
-                ),
-                value: 'logout',
-              )
-            ],
-            onChanged: (itemIdentifier) {
-              if (itemIdentifier == 'logout') {
-                FirebaseAuth.instance.signOut();
-              }
-            },
+            icon: const Icon(Icons.logout),
           ),
         ],
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.pinkAccent,
-                Colors.pink,
-                Colors.purple,
-                Colors.deepPurple,
-              ],
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              tileMode: TileMode.clamp,
-            ),
-          ),
-        ),
       ),
       body: Container(
         child: Column(
-          children: const [
-            Expanded(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(7),
+              color: kPrimaryColor,
+              child: Row(
+                children: [
+                  FillOutlineButton(
+                    press: () {},
+                    text: "Recent Messages",
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  FillOutlineButton(
+                    press: () {},
+                    text: "Active",
+                    isFilled: false,
+                  ),
+                ],
+              ),
+            ),
+            const Expanded(
               child: Messages(),
             ),
-            NewMessage(),
+            const NewMessage(),
           ],
         ),
       ),
