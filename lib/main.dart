@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables
 
 import 'package:chat_app/screens/chatScreen.dart';
+import 'package:chat_app/screens/createGroupScreen.dart';
 import 'package:chat_app/screens/welcomePage.dart';
 import 'package:chat_app/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       theme: lightThemeData(context),
       routes: {
         AuthScreen.routeName: (context) => AuthScreen(),
+        CreateGroupScreen.routeName: (context) => CreateGroupScreen(),
       },
       onGenerateRoute: (settings) {
         // ignore: avoid_print

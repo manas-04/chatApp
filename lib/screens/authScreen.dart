@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, use_key_in_widget_constructors
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -103,7 +103,7 @@ class _AuthScreenState extends State<AuthScreen> {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return ChatScreen();
+          return const ChatScreen();
         } else {
           return Scaffold(
             // ignore: prefer_const_constructors

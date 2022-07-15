@@ -3,11 +3,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../components/button.dart';
 import '../auth/userImagePicker.dart';
-import '../components/button.dart';
 import '../titleSection.dart';
 
 // ignore: must_be_immutable
@@ -226,7 +225,11 @@ class _AuthFormState extends State<AuthForm> {
                             ],
                           ),
                         if (!widget.isLoading)
-                          Button(widget._isLogin, _trySubmit),
+                          Button(
+                            isLogin: widget._isLogin,
+                            text: widget._isLogin ? 'SignIn' : 'SignUp',
+                            trySubmit: _trySubmit,
+                          ),
                         if (!widget.isLoading)
                           TextButton(
                             onPressed: () {

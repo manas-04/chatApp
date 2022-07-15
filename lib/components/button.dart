@@ -5,8 +5,13 @@ import 'package:flutter/material.dart';
 class Button extends StatefulWidget {
   final bool isLogin;
   final VoidCallback trySubmit;
+  final String text;
 
-  const Button(this.isLogin, this.trySubmit);
+  const Button({
+    this.isLogin = true,
+    required this.trySubmit,
+    required this.text,
+  });
 
   @override
   State<Button> createState() => _ButtonState();
@@ -46,7 +51,7 @@ class _ButtonState extends State<Button> with SingleTickerProviderStateMixin {
         scale: _scale,
         child: Container(
           height: 50,
-          width: 200,
+          width: 260,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100.0),
               boxShadow: const [
@@ -66,7 +71,7 @@ class _ButtonState extends State<Button> with SingleTickerProviderStateMixin {
               )),
           child: Center(
             child: Text(
-              widget.isLogin ? 'SignIn' : 'SignUp',
+              widget.text,
               style: const TextStyle(
                 fontSize: 18.0,
                 color: Colors.black87,
