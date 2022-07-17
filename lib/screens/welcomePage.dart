@@ -1,9 +1,9 @@
 // ignore_for_file: file_names
 
-import 'package:chat_app/screens/authScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../screens/authScreen.dart';
 import '../components/welcomeButton.dart';
 import '../widgets/welcomebackground.dart';
 

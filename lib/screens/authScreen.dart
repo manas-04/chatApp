@@ -66,6 +66,7 @@ class _AuthScreenState extends State<AuthScreen> {
             'username': username,
             'email': email,
             'imageUrl': url,
+            'groups': [],
           }).then((value) {
             Fluttertoast.showToast(msg: 'User created successfully !!');
           }).catchError((error) {

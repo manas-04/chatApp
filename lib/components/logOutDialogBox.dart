@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:chat_app/screens/authScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class LogOutDialogBox extends StatelessWidget {
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
-      ), //this right here
+      ),
       child: SizedBox(
         height: MediaQuery.of(context).size.width * 0.3,
         width: MediaQuery.of(context).size.width * 0.8,
@@ -34,7 +35,10 @@ class LogOutDialogBox extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context, 'Success');
+                    Navigator.popUntil(
+                      context,
+                      ModalRoute.withName(AuthScreen.routeName),
+                    );
                     FirebaseAuth.instance.signOut();
                   },
                   child: const Text('Yes'),

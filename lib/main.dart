@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables
 
+import 'package:chat_app/screens/InboxScreen.dart';
 import 'package:chat_app/screens/chatScreen.dart';
 import 'package:chat_app/screens/createGroupScreen.dart';
 import 'package:chat_app/screens/welcomePage.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
       routes: {
         AuthScreen.routeName: (context) => AuthScreen(),
         CreateGroupScreen.routeName: (context) => CreateGroupScreen(),
+        GroupInbox.routeName: (context) => GroupInbox(),
       },
       onGenerateRoute: (settings) {
         // ignore: avoid_print

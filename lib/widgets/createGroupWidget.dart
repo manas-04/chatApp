@@ -1,83 +1,52 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, must_be_immutable
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../components/groupName.dart';
 import '../components/groupCodeString.dart';
 
 class CreateGroupWidget extends StatelessWidget {
-  const CreateGroupWidget({
+  CreateGroupWidget({
     Key? key,
     required this.groupCode,
+    required this.groupName,
   }) : super(key: key);
 
   final String groupCode;
-
-  void _createGroup() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    final userData = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .get();
-
-    FirebaseFirestore.instance
-        .collection('groups')
-        .doc(groupCode)
-        .collection('details')
-        .add({
-      'groupCode': groupCode,
-      'createdAt': Timestamp.now(),
-      'adminId': user.uid,
-      'imageUrl': userData['imageUrl'],
-      'adminUserName': userData['username'],
-      'noOfPeople': 1,
-    }).then((value) {
-      print(value.id);
-      //User mein ek field banana hai Groups karke aur har group ka id add karwana hai
-      //Add group name feature as well
-    }).catchError((error) {
-      print(error);
-    });
-  }
+  String groupName;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Image.asset('dev_assets/beeLogoAdaptive.png'),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            child: Text(
-              'Here is your new group Code : ',
-              style: TextStyle(
-                fontSize: 20,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            const SizedBox(
+              height: 30,
+            ),
+            Image.asset('dev_assets/beeLogoAdaptive.png'),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16),
+              child: Text(
+                'Here is your new group Code : ',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
               ),
             ),
-          ),
-          GroupCodeString(groupCode),
-          MaterialButton(
-            height: 45,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-              side: const BorderSide(color: Colors.white),
+            const SizedBox(
+              height: 15,
             ),
-            elevation: 2,
-            color: const Color.fromARGB(255, 197, 166, 252),
-            onPressed: _createGroup,
-            child: const Text(
-              'Initiate the Group Creation',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-              ),
+            GroupCodeString(groupCode),
+            GroupName(
+              groupName: groupName,
+              groupCode: groupCode,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
