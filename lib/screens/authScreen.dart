@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../screens/chatScreen.dart';
-
 import '../widgets/auth/authForm.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -84,9 +83,6 @@ class _AuthScreenState extends State<AuthScreen> {
       _isLoading = false;
     });
   }
-
-  // ignore: prefer_final_fields
-  // bool _isLogin = true;
 
   @override
   void didChangeDependencies() {

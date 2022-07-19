@@ -6,17 +6,19 @@ import '../components/logOutDialogBox.dart';
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final bool showSearch;
   final String title;
+  final bool backButton;
 
   CustomAppbar({
     Key? key,
     this.showSearch = true,
     required this.title,
+    required this.backButton,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // automaticallyImplyLeading: false,
+      automaticallyImplyLeading: backButton,
       title: Text(title),
       actions: [
         if (showSearch == true)

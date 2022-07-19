@@ -1,14 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables
 
-import 'package:chat_app/screens/InboxScreen.dart';
-import 'package:chat_app/screens/chatScreen.dart';
-import 'package:chat_app/screens/createGroupScreen.dart';
-import 'package:chat_app/screens/welcomePage.dart';
-import 'package:chat_app/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import '../screens/InboxScreen.dart';
+import '../screens/chatScreen.dart';
+import '../screens/createGroupScreen.dart';
+import '../screens/welcomePage.dart';
+import '../theme.dart';
 import '../screens/authScreen.dart';
 
 Future<void> main() async {

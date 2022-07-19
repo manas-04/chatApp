@@ -28,6 +28,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
     return Scaffold(
       appBar: CustomAppbar(
         showSearch: false,
+        backButton: true,
         title: 'Sandesh',
       ),
       body: CreateGroupWidget(

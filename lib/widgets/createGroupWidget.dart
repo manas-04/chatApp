@@ -24,10 +24,13 @@ class CreateGroupWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const SizedBox(
-              height: 30,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.08,
             ),
-            Image.asset('dev_assets/beeLogoAdaptive.png'),
+            Image.asset(
+              'dev_assets/beeLogoAdaptive.png',
+              height: 300,
+            ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 16),
               child: Text(

@@ -1,8 +1,9 @@
 // ignore_for_file: file_names
 
-import 'package:chat_app/screens/authScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../screens/authScreen.dart';
 
 class LogOutDialogBox extends StatelessWidget {
   const LogOutDialogBox({Key? key}) : super(key: key);

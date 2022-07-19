@@ -12,7 +12,7 @@ import '../titleSection.dart';
 // ignore: must_be_immutable
 class AuthForm extends StatefulWidget {
   final bool isLoading;
-  bool _isLogin;
+  bool _isLogin = false;
   final void Function(
     String email,
     String username,

@@ -40,24 +40,21 @@ class _GroupNameState extends State<GroupName> {
           .doc(user!.uid)
           .get();
 
-      FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection('groups')
           .doc(widget.groupCode)
           .collection('details')
-          .add({
+          .doc('generalDetails')
+          .set({
         'groupCode': widget.groupCode,
         'createdAt': Timestamp.now(),
         'adminId': user.uid,
-        'imageUrl': userData['imageUrl'],
         'adminUserName': userData['username'],
         'groupName': widget.groupName,
         'groupMember': [user.uid],
         'noOfPeople': 1,
       }).then((value) async {
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .update({
+        FirebaseFirestore.instance.collection('users').doc(user.uid).update({
           "groups": FieldValue.arrayUnion([widget.groupCode])
         }).then(
           (value) =>

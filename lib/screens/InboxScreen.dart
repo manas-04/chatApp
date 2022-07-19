@@ -20,6 +20,7 @@ class GroupInbox extends StatelessWidget {
 
     return Scaffold(
       appBar: CustomAppbar(
+        backButton: true,
         title: groupName,
       ),
       body: Column(
