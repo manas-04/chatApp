@@ -24,11 +24,11 @@ class GroupInbox extends StatelessWidget {
         title: groupName,
       ),
       body: Column(
-        children: const [
+        children: [
           Expanded(
-            child: Messages(),
+            child: Messages(groupCode),
           ),
-          NewMessage(),
+          NewMessage(groupCode),
         ],
       ),
     );

@@ -5,11 +5,16 @@ import 'package:flutter/material.dart';
 import '../components/groupTile.dart';
 import '../components/buttonRow.dart';
 
-class AllGroupsList extends StatelessWidget {
+class AllGroupsList extends StatefulWidget {
   final List<dynamic> groupData;
 
   const AllGroupsList({Key? key, required this.groupData}) : super(key: key);
 
+  @override
+  State<AllGroupsList> createState() => _AllGroupsListState();
+}
+
+class _AllGroupsListState extends State<AllGroupsList> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,17 +22,13 @@ class AllGroupsList extends StatelessWidget {
         const ButtonRow(),
         Expanded(
           child: RefreshIndicator(
-            onRefresh: () {
-              return Future.delayed(
-                const Duration(
-                  milliseconds: 1000,
-                ),
-              );
+            onRefresh: () async {
+              setState(() {});
             },
             child: ListView.builder(
-              itemCount: groupData.length,
+              itemCount: widget.groupData.length,
               itemBuilder: (context, index) => GroupTile(
-                groupCode: groupData[index],
+                groupCode: widget.groupData[index],
               ),
             ),
           ),

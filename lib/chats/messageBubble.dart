@@ -10,6 +10,7 @@ class MessageBubble extends StatelessWidget {
   final String messageId;
   final String userImage;
   final Key key;
+  final String groupCode;
 
   const MessageBubble({
     required this.message,
@@ -18,6 +19,7 @@ class MessageBubble extends StatelessWidget {
     required this.messageId,
     required this.userImage,
     required this.key,
+    required this.groupCode,
   });
 
   @override
@@ -30,6 +32,8 @@ class MessageBubble extends StatelessWidget {
           TextButton(
             onPressed: () {
               FirebaseFirestore.instance
+                  .collection('groups')
+                  .doc(groupCode)
                   .collection('chats')
                   .doc(messageId)
                   .delete();

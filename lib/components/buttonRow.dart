@@ -1,4 +1,5 @@
 // ignore_for_file: file_names
+import 'package:chat_app/screens/joinGroupScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/createGroupScreen.dart';
@@ -61,7 +62,29 @@ class _ButtonRowState extends State<ButtonRow> {
             width: 15,
           ),
           FillOutlineButton(
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      const JoinScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    const begin = Offset(1.0, 0.0);
+                    const end = Offset.zero;
+                    const curve = Curves.easeOut;
+
+                    var tween = Tween(begin: begin, end: end)
+                        .chain(CurveTween(curve: curve));
+
+                    return SlideTransition(
+                      position: animation.drive(tween),
+                      child: child,
+                    );
+                  },
+                ),
+              );
+            },
             text: "Join a Group",
             isFilled: true,
           ),

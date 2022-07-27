@@ -1,11 +1,12 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, use_key_in_widget_constructors
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NewMessage extends StatefulWidget {
-  const NewMessage({Key? key}) : super(key: key);
+  const NewMessage(this.groupCode);
+  final String groupCode;
 
   @override
   State<NewMessage> createState() => _NewMessageState();
@@ -23,7 +24,11 @@ class _NewMessageState extends State<NewMessage> {
         .doc(user!.uid)
         .get();
 
-    FirebaseFirestore.instance.collection('chats').add({
+    FirebaseFirestore.instance
+        .collection('groups')
+        .doc(widget.groupCode)
+        .collection('chats')
+        .add({
       'text': _enteredMessage,
       'createdAt': Timestamp.now(),
       'userId': user.uid,

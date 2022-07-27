@@ -31,7 +31,10 @@ class _ChatScreenState extends State<ChatScreen> {
             .doc(user!.uid)
             .snapshots(),
         builder: (context, dataSnapshot) {
-          if (dataSnapshot.connectionState == ConnectionState.active) {
+          if (dataSnapshot.hasData &&
+              dataSnapshot.data != null &&
+              dataSnapshot.data!.exists &&
+              dataSnapshot.connectionState == ConnectionState.active) {
             final data = dataSnapshot.data!.get('groups') as List<dynamic>;
             if (data.isNotEmpty) {
               return AllGroupsList(groupData: data);
