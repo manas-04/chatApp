@@ -9,6 +9,7 @@ import '../widgets/allGroupsList.dart';
 import '../widgets/NoGroupSection.dart';
 
 class ChatScreen extends StatefulWidget {
+  static const String routeName = '/ChatScreen';
   const ChatScreen();
 
   @override
@@ -37,7 +38,7 @@ class _ChatScreenState extends State<ChatScreen> {
               dataSnapshot.connectionState == ConnectionState.active) {
             final data = dataSnapshot.data!.get('groups') as List<dynamic>;
             if (data.isNotEmpty) {
-              return AllGroupsList(groupData: data);
+              return AllGroupsList(groupData: data.reversed.toList());
             } else {
               return const NoGroupScreen();
             }

@@ -24,14 +24,6 @@ class _ButtonRowState extends State<ButtonRow> {
       child: Row(
         children: [
           FillOutlineButton(
-            press: () {},
-            text: "Recent Messages",
-            isFilled: true,
-          ),
-          const SizedBox(
-            width: 15,
-          ),
-          FillOutlineButton(
             press: () {
               Navigator.push(
                 context,
@@ -55,7 +47,7 @@ class _ButtonRowState extends State<ButtonRow> {
                 ),
               );
             },
-            text: "Create a Group",
+            text: "Create a Chat Stream",
             isFilled: true,
           ),
           const SizedBox(
@@ -85,7 +77,7 @@ class _ButtonRowState extends State<ButtonRow> {
                 ),
               );
             },
-            text: "Join a Group",
+            text: "Join a Chat Stream",
             isFilled: true,
           ),
         ],

@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
         AuthScreen.routeName: (context) => AuthScreen(),
         CreateGroupScreen.routeName: (context) => CreateGroupScreen(),
         GroupInbox.routeName: (context) => GroupInbox(),
+        ChatScreen.routeName: (context) => ChatScreen(),
       },
       onGenerateRoute: (settings) {
         // ignore: avoid_print

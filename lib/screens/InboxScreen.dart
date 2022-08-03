@@ -1,8 +1,7 @@
 // ignore_for_file: file_names
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../components/leaveGroupDialogBox.dart';
 import '../chats/messages.dart';
 import '../chats/newMessage.dart';
 import '../components/logOutDialogBox.dart';
@@ -14,48 +13,11 @@ class GroupInbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late int members;
-    late List<dynamic> membersList;
     final routeArgs =
         ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
     final String groupCode = routeArgs['groupCode'] as String;
     final String groupName = routeArgs['groupName'] as String;
-
-    void _leaveGroup() async {
-      User? user = FirebaseAuth.instance.currentUser;
-
-      var docRef = await FirebaseFirestore.instance
-          .collection('groups')
-          .doc(groupCode)
-          .collection('details')
-          .doc('generalDetails')
-          .get();
-
-      if (docRef.exists) {
-        members = docRef.get('noOfPeople') as int;
-        membersList = docRef.get('groupMember') as List<dynamic>;
-        if (membersList.contains(user!.uid)) {
-          await FirebaseFirestore.instance
-              .collection('groups')
-              .doc(groupCode)
-              .collection('details')
-              .doc('generalDetails')
-              .update({
-            "noOfPeople": members - 1,
-            "groupMember": FieldValue.arrayRemove([user.uid])
-          });
-
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(user.uid)
-              .update({
-            "groups": FieldValue.arrayRemove([groupCode])
-          });
-        }
-        Navigator.pop(context);
-      }
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -64,15 +26,20 @@ class GroupInbox extends StatelessWidget {
           PopupMenuButton(
             onSelected: (value) {
               if (value == 'search') {
+              } else if (value == 'groupInfo') {
               } else if (value == 'leaveGroup') {
-                _leaveGroup();
+                showDialog(
+                  context: context,
+                  builder: (context) => LeaveGroupDialogBox(groupCode),
+                );
               } else if (value == 'logout') {
                 showDialog(
                   context: context,
                   builder: (context) => const LogOutDialogBox(),
                 );
-              }
+              } else if (value == "settings") {}
             },
+            constraints: const BoxConstraints(minWidth: 180),
             itemBuilder: (context) => [
               PopupMenuItem(
                 value: 'search',
@@ -90,8 +57,27 @@ class GroupInbox extends StatelessWidget {
                 ),
               ),
               PopupMenuItem(
+                value: 'groupInfo',
                 child: Row(
                   children: const [
+                    Icon(
+                      Icons.group_outlined,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('Group Info'),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                child: Row(
+                  children: const [
+                    Icon(
+                      Icons.exit_to_app_rounded,
+                      color: Colors.black,
+                    ),
                     SizedBox(
                       width: 10,
                     ),
@@ -99,6 +85,21 @@ class GroupInbox extends StatelessWidget {
                   ],
                 ),
                 value: 'leaveGroup',
+              ),
+              PopupMenuItem(
+                value: 'settings',
+                child: Row(
+                  children: const [
+                    Icon(
+                      Icons.settings,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('Settings'),
+                  ],
+                ),
               ),
               PopupMenuItem(
                 value: 'logout',
