@@ -138,7 +138,7 @@ class _GroupNameState extends State<GroupName> {
             color: const Color.fromARGB(255, 197, 166, 252),
             onPressed: _createGroup,
             child: const Text(
-              'Press to Initiate the Group Creation',
+              'Press to Initiate the Chat Creation',
               softWrap: true,
               overflow: TextOverflow.fade,
               style: TextStyle(

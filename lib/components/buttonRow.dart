@@ -55,28 +55,40 @@ class _ButtonRowState extends State<ButtonRow> {
           ),
           FillOutlineButton(
             press: () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      const JoinScreen(),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    const begin = Offset(1.0, 0.0);
-                    const end = Offset.zero;
-                    const curve = Curves.easeOut;
-
-                    var tween = Tween(begin: begin, end: end)
-                        .chain(CurveTween(curve: curve));
-
-                    return SlideTransition(
-                      position: animation.drive(tween),
-                      child: child,
-                    );
-                  },
-                ),
-              );
+              showModalBottomSheet(
+                  isScrollControlled: true,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(25.0),
+                    ),
+                  ),
+                  context: context,
+                  builder: (context) {
+                    return const JoinChatModalSheet();
+                  });
             },
+            //   Navigator.push(
+            //     context,
+            //     PageRouteBuilder(
+            //       pageBuilder: (context, animation, secondaryAnimation) =>
+            //           const JoinScreen(),
+            //       transitionsBuilder:
+            //           (context, animation, secondaryAnimation, child) {
+            //         const begin = Offset(1.0, 0.0);
+            //         const end = Offset.zero;
+            //         const curve = Curves.easeOut;
+
+            //         var tween = Tween(begin: begin, end: end)
+            //             .chain(CurveTween(curve: curve));
+
+            //         return SlideTransition(
+            //           position: animation.drive(tween),
+            //           child: child,
+            //         );
+            //       },
+            //     ),
+            //   );
+            // },
             text: "Join a Chat Stream",
             isFilled: true,
           ),

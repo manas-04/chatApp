@@ -37,7 +37,9 @@ class _ChatScreenState extends State<ChatScreen> {
               dataSnapshot.data!.exists &&
               dataSnapshot.connectionState == ConnectionState.active) {
             final data = dataSnapshot.data!.get('groups') as List<dynamic>;
-            if (data.isNotEmpty) {
+            final archiveData =
+                dataSnapshot.data!.get('archivedGroups') as List<dynamic>;
+            if (archiveData.isNotEmpty || data.isNotEmpty) {
               return AllGroupsList(groupData: data.reversed.toList());
             } else {
               return const NoGroupScreen();

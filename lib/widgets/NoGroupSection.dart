@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../screens/createGroupScreen.dart';
 import '../components/button.dart';
+import '../screens/joinGroupScreen.dart';
 
 class NoGroupScreen extends StatelessWidget {
   const NoGroupScreen();
@@ -32,7 +33,21 @@ class NoGroupScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 7.5),
-              child: Button(trySubmit: () {}, text: 'Join a Conversation'),
+              child: Button(
+                  trySubmit: () {
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(25.0),
+                          ),
+                        ),
+                        context: context,
+                        builder: (context) {
+                          return const JoinChatModalSheet();
+                        });
+                  },
+                  text: 'Join a Conversation'),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 7.5),

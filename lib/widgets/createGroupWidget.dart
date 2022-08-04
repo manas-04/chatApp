@@ -34,7 +34,7 @@ class CreateGroupWidget extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 16),
               child: Text(
-                'Here is your new group Code : ',
+                'Here is your new chat Code : ',
                 style: TextStyle(
                   fontSize: 20,
                 ),

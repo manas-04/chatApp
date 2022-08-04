@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../components/archivedBar.dart';
 import '../components/groupTile.dart';
 import '../components/buttonRow.dart';
 
@@ -20,19 +21,23 @@ class _AllGroupsListState extends State<AllGroupsList> {
     return Column(
       children: [
         const ButtonRow(),
-        Expanded(
-          child: RefreshIndicator(
-            onRefresh: () async {
-              setState(() {});
-            },
-            child: ListView.builder(
-              itemCount: widget.groupData.length,
-              itemBuilder: (context, index) => GroupTile(
-                groupCode: widget.groupData[index],
+        const ArchivedBar(),
+        if (widget.groupData.isNotEmpty)
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: () async {
+                setState(() {});
+              },
+              child: ListView.builder(
+                itemCount: widget.groupData.length,
+                itemBuilder: (context, index) => GroupTile(
+                  groupCode: widget.groupData[index],
+                  archive: false,
+                ),
               ),
             ),
           ),
-        )
+        if (widget.groupData.isEmpty) Container(),
       ],
     );
   }
