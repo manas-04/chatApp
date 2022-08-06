@@ -7,8 +7,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../auth/authForm.dart';
 import '../screens/chatScreen.dart';
-import '../widgets/auth/authForm.dart';
 
 class AuthScreen extends StatefulWidget {
   static const String routeName = '/AuthScreen';

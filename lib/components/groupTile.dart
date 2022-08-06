@@ -23,7 +23,6 @@ class _GroupTileState extends State<GroupTile> {
   late String groupName;
   late String adminName;
   late int members;
-  late String groupCode;
 
   void _dismiss(String groupCode, bool archive) async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -77,9 +76,9 @@ class _GroupTileState extends State<GroupTile> {
             groupName = snapshot.data!.get('groupName') as String;
             adminName = snapshot.data!.get('adminUserName') as String;
             members = snapshot.data!.get('noOfPeople') as int;
-            groupCode = snapshot.data!.get('groupCode') as String;
+
             return Dismissible(
-              key: ValueKey(groupCode),
+              key: ValueKey(widget.groupCode),
               background: Container(
                 color: kPrimaryColor.shade300,
                 child: Row(
@@ -100,14 +99,14 @@ class _GroupTileState extends State<GroupTile> {
               ),
               direction: DismissDirection.endToStart,
               onDismissed: (direction) {
-                _dismiss(groupCode, widget.archive);
+                _dismiss(widget.groupCode, widget.archive);
               },
               child: GestureDetector(
                 onTap: () {
                   Navigator.of(context)
                       .pushNamed(GroupInbox.routeName, arguments: {
                     "groupName": groupName,
-                    "groupCode": groupCode,
+                    "groupCode": widget.groupCode,
                   });
                 },
                 child: ListTile(
@@ -121,7 +120,7 @@ class _GroupTileState extends State<GroupTile> {
                   ),
                   trailing: GestureDetector(
                     onLongPress: () {
-                      Clipboard.setData(ClipboardData(text: groupCode));
+                      Clipboard.setData(ClipboardData(text: widget.groupCode));
                       Fluttertoast.showToast(
                           msg: 'Group Code copied to Clipboard');
                     },
@@ -131,7 +130,7 @@ class _GroupTileState extends State<GroupTile> {
                       children: [
                         Text('Members : $members'),
                         Text(
-                          'Group Code : $groupCode',
+                          'Group Code : ${widget.groupCode}',
                           style: const TextStyle(color: Colors.grey),
                         ),
                       ],

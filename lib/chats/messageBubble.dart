@@ -62,7 +62,7 @@ class MessageBubble extends StatelessWidget {
         }
       },
       child: Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: 6),
         child: Stack(
           children: [
             Row(
@@ -85,11 +85,11 @@ class MessageBubble extends StatelessWidget {
                       bottomRight: const Radius.circular(14),
                     ),
                   ),
-                  width: MediaQuery.of(context).size.width * 0.42,
+                  width: MediaQuery.of(context).size.width * 0.5,
                   padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
                   margin:
-                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                      const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                   child: Column(
                     crossAxisAlignment: !isSameUser
                         ? CrossAxisAlignment.start
@@ -115,15 +115,15 @@ class MessageBubble extends StatelessWidget {
                 ),
               ],
             ),
-            Positioned(
-              top: -20,
-              left: !isSameUser
-                  ? MediaQuery.of(context).size.width * 0.38
-                  : MediaQuery.of(context).size.width * 0.52,
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(userImage),
-              ),
-            ),
+            // Positioned(
+            //   top: -20,
+            //   left: !isSameUser
+            // //      ? MediaQuery.of(context).size.width * 0.38
+            //       : MediaQuery.of(context).size.width * 0.52,
+            //   child: CircleAvatar(
+            //     backgroundImage: NetworkImage(userImage),
+            //   ),
+            // ),
           ],
           clipBehavior: Clip.none,
         ),

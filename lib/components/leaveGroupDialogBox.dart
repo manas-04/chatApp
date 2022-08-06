@@ -44,12 +44,28 @@ class LeaveGroupDialogBox extends StatelessWidget {
               .doc('generalDetails')
               .delete();
         }
-        await FirebaseFirestore.instance
+        final doc = await FirebaseFirestore.instance
             .collection('users')
             .doc(user!.uid)
-            .update({
-          "groups": FieldValue.arrayRemove([groupCode])
-        });
+            .get();
+        final archivedGroups = doc.data()!['archivedGroups'] as List<dynamic>;
+
+        if (archivedGroups.contains(groupCode)) {
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .update({
+            'archivedGroups': FieldValue.arrayRemove([groupCode])
+          });
+        } else {
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .update({
+            'groups': FieldValue.arrayRemove([groupCode])
+          });
+        }
+
         Navigator.pop(context);
         Navigator.pushReplacementNamed(
           context,

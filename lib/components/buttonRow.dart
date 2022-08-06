@@ -1,7 +1,8 @@
 // ignore_for_file: file_names
-import 'package:chat_app/screens/joinGroupScreen.dart';
+
 import 'package:flutter/material.dart';
 
+import '../widgets/joinGroupModalSheet.dart';
 import '../screens/createGroupScreen.dart';
 import '../components/filledOutButton.dart';
 import '../constants.dart';

@@ -37,7 +37,28 @@ class _AllGroupsListState extends State<AllGroupsList> {
               ),
             ),
           ),
-        if (widget.groupData.isEmpty) Container(),
+        if (widget.groupData.isEmpty)
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/waiting.png',
+                  height: MediaQuery.of(context).size.height * 0.25,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                const Text(
+                  "You don't have any chat here.",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+          ),
       ],
     );
   }

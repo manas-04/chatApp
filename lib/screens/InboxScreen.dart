@@ -1,4 +1,5 @@
 // ignore_for_file: file_names
+import 'package:chat_app/screens/groupInfoScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../components/leaveGroupDialogBox.dart';
@@ -26,7 +27,12 @@ class GroupInbox extends StatelessWidget {
           PopupMenuButton(
             onSelected: (value) {
               if (value == 'search') {
-              } else if (value == 'groupInfo') {
+              } else if (value == 'chatInfo') {
+                Navigator.of(context)
+                    .pushNamed(GroupInfoScreen.routeName, arguments: {
+                  "groupCode": groupCode,
+                  "groupName": groupName,
+                });
               } else if (value == 'leaveGroup') {
                 showDialog(
                   context: context,
@@ -42,6 +48,7 @@ class GroupInbox extends StatelessWidget {
             constraints: const BoxConstraints(minWidth: 180),
             itemBuilder: (context) => [
               PopupMenuItem(
+                enabled: false,
                 value: 'search',
                 child: Row(
                   children: const [
@@ -57,7 +64,7 @@ class GroupInbox extends StatelessWidget {
                 ),
               ),
               PopupMenuItem(
-                value: 'groupInfo',
+                value: 'chatInfo',
                 child: Row(
                   children: const [
                     Icon(
@@ -67,7 +74,7 @@ class GroupInbox extends StatelessWidget {
                     SizedBox(
                       width: 10,
                     ),
-                    Text('Group Info'),
+                    Text('Chat Info'),
                   ],
                 ),
               ),
@@ -87,6 +94,7 @@ class GroupInbox extends StatelessWidget {
                 value: 'leaveGroup',
               ),
               PopupMenuItem(
+                enabled: false,
                 value: 'settings',
                 child: Row(
                   children: const [
@@ -120,13 +128,22 @@ class GroupInbox extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Messages(groupCode),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/doodle.jpg'),
+            opacity: 0.6,
+            alignment: Alignment.topCenter,
           ),
-          NewMessage(groupCode),
-        ],
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: Messages(groupCode),
+            ),
+            NewMessage(groupCode),
+          ],
+        ),
       ),
     );
   }

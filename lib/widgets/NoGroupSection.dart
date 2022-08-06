@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../screens/createGroupScreen.dart';
 import '../components/button.dart';
-import '../screens/joinGroupScreen.dart';
+import 'joinGroupModalSheet.dart';
 
 class NoGroupScreen extends StatelessWidget {
   const NoGroupScreen();
