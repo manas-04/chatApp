@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../widgets/joinGroupModalSheet.dart';
 import '../screens/createGroupScreen.dart';
-import '../components/filledOutButton.dart';
+import '../widgets/filledOutButton.dart';
 import '../constants.dart';
 
 class ButtonRow extends StatefulWidget {

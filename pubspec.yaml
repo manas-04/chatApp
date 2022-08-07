@@ -78,6 +78,7 @@ flutter:
     - assets/images/waiting.png
     - dev_assets/beeLogoAdaptive.png
     - assets/images/doodle.jpg
+    - assets/images/beeLogo1500.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

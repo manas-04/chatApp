@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../screens/createGroupScreen.dart';
-import '../components/button.dart';
+import '../widgets/button.dart';
 import 'joinGroupModalSheet.dart';
 
 class NoGroupScreen extends StatelessWidget {

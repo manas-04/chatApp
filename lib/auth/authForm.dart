@@ -5,8 +5,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../components/button.dart';
 import '../auth/userImagePicker.dart';
+import '../widgets/button.dart';
 import '../widgets/titleSection.dart';
 
 // ignore: must_be_immutable

@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 
-import '../components/customAppBar.dart';
 import '../constants.dart';
 import '../widgets/createGroupWidget.dart';
+import '../widgets/customAppBar.dart';
 
 class CreateGroupScreen extends StatefulWidget {
   static const String routeName = '/CreateGroupScreen';

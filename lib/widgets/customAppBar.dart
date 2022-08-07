@@ -1,7 +1,7 @@
 // ignore_for_file: file_names, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
-import '../components/logOutDialogBox.dart';
+import '../widgets/logOutDialogBox.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final bool showSearch;

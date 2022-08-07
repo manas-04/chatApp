@@ -1,8 +1,8 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 
-import '../components/customAppBar.dart';
-import '../components/groupTile.dart';
+import '../widgets/customAppBar.dart';
+import '../widgets/groupTile.dart';
 
 class ArchivedScreen extends StatefulWidget {
   const ArchivedScreen({Key? key}) : super(key: key);

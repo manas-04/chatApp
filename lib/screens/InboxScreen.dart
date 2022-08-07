@@ -2,10 +2,10 @@
 import 'package:chat_app/screens/groupInfoScreen.dart';
 import 'package:flutter/material.dart';
 
-import '../components/leaveGroupDialogBox.dart';
 import '../chats/messages.dart';
 import '../chats/newMessage.dart';
-import '../components/logOutDialogBox.dart';
+import '../widgets/leaveGroupDialogBox.dart';
+import '../widgets/logOutDialogBox.dart';
 
 class GroupInbox extends StatelessWidget {
   static const String routeName = '/GroupInbox';
@@ -132,7 +132,7 @@ class GroupInbox extends StatelessWidget {
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/doodle.jpg'),
-            opacity: 0.6,
+            opacity: 0.4,
             alignment: Alignment.topCenter,
           ),
         ),

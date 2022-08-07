@@ -4,9 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../components/customAppBar.dart';
 import '../widgets/allGroupsList.dart';
 import '../widgets/NoGroupSection.dart';
+import '../widgets/customAppBar.dart';
 
 class ChatScreen extends StatefulWidget {
   static const String routeName = '/ChatScreen';

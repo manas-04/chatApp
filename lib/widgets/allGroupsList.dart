@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 
-import '../components/archivedBar.dart';
-import '../components/groupTile.dart';
-import '../components/buttonRow.dart';
+import '../widgets/archivedBar.dart';
+import '../widgets/groupTile.dart';
+import '../widgets/buttonRow.dart';
 
 class AllGroupsList extends StatefulWidget {
   final List<dynamic> groupData;

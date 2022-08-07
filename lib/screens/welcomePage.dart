@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../screens/authScreen.dart';
-import '../components/welcomeButton.dart';
+import '../widgets/welcomeButton.dart';
 import '../widgets/welcomebackground.dart';
 
 class WelcomePage extends StatelessWidget {

@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-import '../components/groupName.dart';
-import '../components/groupCodeString.dart';
+import '../widgets/groupName.dart';
+import '../widgets/groupCodeString.dart';
 
 class CreateGroupWidget extends StatelessWidget {
   CreateGroupWidget({
