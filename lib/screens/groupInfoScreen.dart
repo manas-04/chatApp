@@ -44,7 +44,7 @@ class GroupInfoScreen extends StatelessWidget {
           createdDate = snapshot.data!.get('createdAt') as Timestamp;
           membersList = snapshot.data!.get('groupMember') as List<dynamic>;
           return AnimatedSwitcher(
-            duration: Duration(seconds: 2),
+            duration: const Duration(seconds: 2),
             child: Scaffold(
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

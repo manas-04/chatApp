@@ -54,7 +54,6 @@ class MessageBubble extends StatelessWidget {
         milliseconds: 2000,
       ),
     );
-
     return GestureDetector(
       onLongPress: () {
         if (isSameUser) {

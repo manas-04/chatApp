@@ -25,9 +25,9 @@ class Messages extends StatelessWidget {
             stream: FirebaseFirestore.instance
                 .collection('groups')
                 .doc(groupCode)
-                .collection('chats')
+                .collection("chats")
                 .orderBy(
-                  'createdAt',
+                  "createdAt",
                   descending: true,
                 )
                 .snapshots(),
@@ -38,6 +38,7 @@ class Messages extends StatelessWidget {
                 );
               }
               final document = chatSnapshot.data!.docs;
+
               return ListView.builder(
                 itemCount: document.length,
                 reverse: true,

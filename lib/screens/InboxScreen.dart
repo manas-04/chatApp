@@ -141,7 +141,9 @@ class GroupInbox extends StatelessWidget {
             Expanded(
               child: Messages(groupCode),
             ),
-            NewMessage(groupCode),
+            Container(
+                decoration: const BoxDecoration(color: Colors.white),
+                child: NewMessage(groupCode)),
           ],
         ),
       ),

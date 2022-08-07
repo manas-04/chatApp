@@ -84,91 +84,89 @@ class _JoinChatModalSheetState extends State<JoinChatModalSheet> {
       width: double.infinity,
       padding: MediaQuery.of(context).viewInsets,
       child: SingleChildScrollView(
-        child: Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-              const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(
-                  "Enter the chat code below :",
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+            const Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Text(
+                "Enter the chat code below :",
+                style: TextStyle(
+                  fontSize: 18,
                 ),
               ),
-              Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 7,
-                    horizontal: 60,
-                  ),
-                  child: TextFormField(
-                    key: const ValueKey('code'),
-                    decoration: InputDecoration(
-                      labelText: 'Group Code',
-                      prefixIcon: const Icon(Icons.groups_rounded),
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 15,
-                        horizontal: 20,
-                      ),
-                      hintText: "Enter Code",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
+            ),
+            Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 7,
+                  horizontal: 60,
+                ),
+                child: TextFormField(
+                  key: const ValueKey('code'),
+                  decoration: InputDecoration(
+                    labelText: 'Group Code',
+                    prefixIcon: const Icon(Icons.groups_rounded),
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 15,
+                      horizontal: 20,
                     ),
-                    onSaved: (value) {
-                      code = value!;
-                    },
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Group Code is required.";
-                      } else if (value.length > 7 || value.length < 7) {
-                        return "Group Code must be of 7 characters.";
-                      } else {
-                        return null;
-                      }
-                    },
+                    hintText: "Enter Code",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
+                  onSaved: (value) {
+                    code = value!;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Group Code is required.";
+                    } else if (value.length > 7 || value.length < 7) {
+                      return "Group Code must be of 7 characters.";
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              if (!_isLoading)
-                MaterialButton(
-                  height: 45,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    side: const BorderSide(color: Colors.white),
-                  ),
-                  elevation: 2,
-                  color: const Color.fromARGB(255, 197, 166, 252),
-                  onPressed: _findGroup,
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: Text(
-                      'Press to initiate the Join process >>',
-                      softWrap: true,
-                      overflow: TextOverflow.fade,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                      ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            if (!_isLoading)
+              MaterialButton(
+                height: 45,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  side: const BorderSide(color: Colors.white),
+                ),
+                elevation: 2,
+                color: const Color.fromARGB(255, 197, 166, 252),
+                onPressed: _findGroup,
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    'Press to initiate the Join process >>',
+                    softWrap: true,
+                    overflow: TextOverflow.fade,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
                     ),
                   ),
                 ),
-              if (_isLoading)
-                const Center(
-                  child: CircularProgressIndicator(),
-                ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.07),
-            ],
-          ),
+              ),
+            if (_isLoading)
+              const Center(
+                child: CircularProgressIndicator(),
+              ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.07),
+          ],
         ),
       ),
     );
