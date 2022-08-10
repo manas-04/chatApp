@@ -26,21 +26,17 @@ class _GroupTileState extends State<GroupTile> {
 
   void _dismiss(String groupCode, bool archive) async {
     User? user = FirebaseAuth.instance.currentUser;
-    final doc = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .get();
 
     archive
         ? await FirebaseFirestore.instance
             .collection('users')
-            .doc(user.uid)
+            .doc(user!.uid)
             .update({
             "archivedGroups": FieldValue.arrayRemove([groupCode])
           })
         : await FirebaseFirestore.instance
             .collection('users')
-            .doc(user.uid)
+            .doc(user!.uid)
             .update({
             "groups": FieldValue.arrayRemove([groupCode])
           });
