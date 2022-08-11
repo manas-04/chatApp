@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables
 
-import 'package:chat_app/screens/groupInfoScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import '../screens/groupInfoScreen.dart';
 import '../screens/archivedScreen.dart';
 import '../screens/InboxScreen.dart';
 import '../screens/chatScreen.dart';

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../widgets/groupImageDialog.dart';
 import '../constants.dart';
 import '../screens/InboxScreen.dart';
 
@@ -23,6 +24,9 @@ class _GroupTileState extends State<GroupTile> {
   late String groupName;
   late String adminName;
   late int members;
+  late String? groupImage;
+  late Timestamp createdDate;
+  late List<dynamic> membersList;
 
   void _dismiss(String groupCode, bool archive) async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -72,6 +76,9 @@ class _GroupTileState extends State<GroupTile> {
             groupName = snapshot.data!.get('groupName') as String;
             adminName = snapshot.data!.get('adminUserName') as String;
             members = snapshot.data!.get('noOfPeople') as int;
+            groupImage = snapshot.data!.get('groupImage') as String?;
+            createdDate = snapshot.data!.get('createdAt') as Timestamp;
+            membersList = snapshot.data!.get('groupMember') as List<dynamic>;
 
             return Dismissible(
               key: ValueKey(widget.groupCode),
@@ -103,16 +110,45 @@ class _GroupTileState extends State<GroupTile> {
                       .pushNamed(GroupInbox.routeName, arguments: {
                     "groupName": groupName,
                     "groupCode": widget.groupCode,
+                    "groupImage": groupImage,
+                    "adminName": adminName,
+                    "members": members,
+                    "createdDate": createdDate,
+                    "membersList": membersList,
                   });
                 },
                 child: ListTile(
-                  leading: const CircleAvatar(
-                    backgroundColor: Color.fromARGB(255, 202, 202, 202),
-                    child: Icon(
-                      Icons.group_rounded,
-                      color: Colors.white,
-                      size: 26,
-                    ),
+                  leading: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => GroupImageDialog(
+                          groupName: groupName,
+                          groupCode: widget.groupCode,
+                          groupImage: groupImage,
+                          adminName: adminName,
+                          createdDate: createdDate,
+                          members: members,
+                          membersList: membersList,
+                          showinfo: true,
+                        ),
+                      );
+                    },
+                    child: groupImage == null
+                        ? const CircleAvatar(
+                            backgroundColor: Color.fromARGB(255, 202, 202, 202),
+                            radius: 28,
+                            child: Icon(
+                              Icons.groups_rounded,
+                              color: Colors.white,
+                              size: 32,
+                            ),
+                          )
+                        : CircleAvatar(
+                            radius: 28,
+                            backgroundColor: Colors.grey,
+                            backgroundImage: NetworkImage(groupImage!),
+                          ),
                   ),
                   trailing: GestureDetector(
                     onLongPress: () {

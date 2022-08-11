@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 import 'package:chat_app/screens/groupInfoScreen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../chats/messages.dart';
@@ -15,14 +16,46 @@ class GroupInbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final routeArgs =
-        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     final String groupCode = routeArgs['groupCode'] as String;
     final String groupName = routeArgs['groupName'] as String;
+    final String? groupImage = routeArgs['groupImage'] as String?;
+    final String adminName = routeArgs['adminName'] as String;
+    final int members = routeArgs['members'] as int;
+    final Timestamp createdDate = routeArgs['createdDate'] as Timestamp;
+    final List<dynamic> membersList = routeArgs['membersList'] as List<dynamic>;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(groupName),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            if (groupImage == null)
+              Hero(
+                tag: groupCode,
+                child: const CircleAvatar(
+                  backgroundColor: Color.fromARGB(255, 207, 207, 207),
+                  child: Icon(
+                    Icons.groups_rounded,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            if (groupImage != null)
+              Hero(
+                tag: groupCode,
+                child: CircleAvatar(
+                  backgroundColor: const Color.fromARGB(255, 207, 207, 207),
+                  backgroundImage: NetworkImage(groupImage),
+                ),
+              ),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(groupName),
+          ],
+        ),
         actions: [
           PopupMenuButton(
             onSelected: (value) {
@@ -32,6 +65,11 @@ class GroupInbox extends StatelessWidget {
                     .pushNamed(GroupInfoScreen.routeName, arguments: {
                   "groupCode": groupCode,
                   "groupName": groupName,
+                  "groupImage": groupImage,
+                  "adminName": adminName,
+                  "members": members,
+                  "createdDate": createdDate,
+                  "membersList": membersList,
                 });
               } else if (value == 'leaveGroup') {
                 showDialog(

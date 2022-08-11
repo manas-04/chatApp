@@ -39,6 +39,8 @@ class _GroupNameState extends State<GroupName> {
           .doc(user!.uid)
           .get();
 
+      final Timestamp groupCreationTime = Timestamp.now();
+
       await FirebaseFirestore.instance
           .collection('groups')
           .doc(widget.groupCode)
@@ -46,20 +48,26 @@ class _GroupNameState extends State<GroupName> {
           .doc('generalDetails')
           .set({
         'groupCode': widget.groupCode,
-        'createdAt': Timestamp.now(),
+        'createdAt': groupCreationTime,
         'adminId': user.uid,
         'adminUserName': userData['username'],
         'groupName': widget.groupName,
         'groupMember': [user.uid],
         'noOfPeople': 1,
+        'groupImage': null
       }).then((value) async {
         FirebaseFirestore.instance.collection('users').doc(user.uid).update({
           "groups": FieldValue.arrayUnion([widget.groupCode])
         }).then(
           (value) =>
               Navigator.of(context).pushNamed(GroupInbox.routeName, arguments: {
-            'groupCode': widget.groupCode,
-            'groupName': widget.groupName,
+            "groupName": widget.groupName,
+            "groupCode": widget.groupCode,
+            "groupImage": null,
+            "adminName": userData['username'],
+            "members": 1,
+            "createdDate": groupCreationTime,
+            "membersList": [user.uid],
           }).catchError((error) {
             print(error);
           }),

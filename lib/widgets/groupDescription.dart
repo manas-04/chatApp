@@ -10,10 +10,14 @@ class GroupDescription extends StatelessWidget {
     required this.groupName,
     required this.adminName,
     required this.createdDate,
+    required this.groupCode,
+    required this.groupImage,
   }) : super(key: key);
 
+  final String groupCode;
   final String groupName;
   final String adminName;
+  final String? groupImage;
   final Timestamp createdDate;
 
   @override
@@ -31,15 +35,28 @@ class GroupDescription extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const CircleAvatar(
-              child: Icon(
-                Icons.group,
-                color: Colors.white,
-                size: 50,
+            if (groupImage == null)
+              Hero(
+                tag: groupCode,
+                child: const CircleAvatar(
+                  child: Icon(
+                    Icons.groups_rounded,
+                    color: Colors.white,
+                    size: 50,
+                  ),
+                  radius: 50,
+                  backgroundColor: Color.fromARGB(255, 216, 216, 216),
+                ),
               ),
-              radius: 50,
-              backgroundColor: Color.fromARGB(255, 216, 216, 216),
-            ),
+            if (groupImage != null)
+              Hero(
+                tag: groupCode,
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundColor: const Color.fromARGB(255, 216, 216, 216),
+                  backgroundImage: NetworkImage(groupImage!),
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.only(top: 25),
               child: Text(
