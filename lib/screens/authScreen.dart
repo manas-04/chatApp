@@ -62,11 +62,14 @@ class _AuthScreenState extends State<AuthScreen> {
               .collection('users')
               .doc(value.user!.uid)
               .set({
-            'username': username,
-            'email': email,
-            'imageUrl': url,
-            'groups': [],
-            'archivedGroups': [],
+            "email": email,
+            "userName": username,
+            "imageUrl": userImage,
+            "bio": '',
+            "number": '',
+            "gender": '',
+            "groups": [],
+            "archivedGroups": [],
           }).then((value) {
             Fluttertoast.showToast(msg: 'User created successfully !!');
           }).catchError((error) {

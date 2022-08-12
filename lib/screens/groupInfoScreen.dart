@@ -1,7 +1,4 @@
 // ignore_for_file: file_names, must_be_immutable
-
-import 'package:chat_app/widgets/changeGroupDialogBox.dart';
-import 'package:chat_app/widgets/changeGroupName.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -59,55 +56,6 @@ class GroupInfoScreen extends StatelessWidget {
             ),
             MemberTile(
               membersList: membersList,
-            ),
-            TextButton(
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all(EdgeInsets.zero),
-              ),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => ChangeGroupImageDialog(
-                    groupCode: groupCode,
-                  ),
-                );
-              },
-              child: const ListTile(
-                contentPadding: EdgeInsets.only(left: 25),
-                leading: Icon(
-                  Icons.groups_rounded,
-                  color: Colors.lightBlueAccent,
-                ),
-                title: Text(
-                  'Change Group Image',
-                  style: TextStyle(color: Colors.lightBlueAccent),
-                ),
-              ),
-            ),
-            TextButton(
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all(EdgeInsets.zero),
-              ),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => ChangeGroupNameDialogBox(
-                    groupName: groupName,
-                    groupCode: groupCode,
-                  ),
-                );
-              },
-              child: const ListTile(
-                contentPadding: EdgeInsets.only(left: 25),
-                leading: Icon(
-                  Icons.edit,
-                  color: Colors.lightBlueAccent,
-                ),
-                title: Text(
-                  'Change Group Name',
-                  style: TextStyle(color: Colors.lightBlueAccent),
-                ),
-              ),
             ),
             TextButton(
               style: ButtonStyle(

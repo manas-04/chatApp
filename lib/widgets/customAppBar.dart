@@ -24,7 +24,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
         if (showSearch == true)
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.search),
+            icon: const Icon(Icons.person_rounded),
           ),
         IconButton(
           onPressed: () => showDialog(

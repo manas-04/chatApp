@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 import 'package:chat_app/screens/groupInfoScreen.dart';
+import 'package:chat_app/screens/groupSettingScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -81,7 +82,13 @@ class GroupInbox extends StatelessWidget {
                   context: context,
                   builder: (context) => const LogOutDialogBox(),
                 );
-              } else if (value == "settings") {}
+              } else if (value == "settings") {
+                Navigator.of(context)
+                    .pushNamed(GroupSettingsScreen.routeName, arguments: {
+                  "groupCode": groupCode,
+                  "groupName": groupName,
+                });
+              }
             },
             constraints: const BoxConstraints(minWidth: 180),
             itemBuilder: (context) => [
@@ -132,7 +139,6 @@ class GroupInbox extends StatelessWidget {
                 value: 'leaveGroup',
               ),
               PopupMenuItem(
-                enabled: false,
                 value: 'settings',
                 child: Row(
                   children: const [
