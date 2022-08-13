@@ -68,6 +68,7 @@ class _GroupNameState extends State<GroupName> {
             "members": 1,
             "createdDate": groupCreationTime,
             "membersList": [user.uid],
+            "adminId": user.uid,
           }).catchError((error) {
             print(error);
           }),
@@ -115,9 +116,9 @@ class _GroupNameState extends State<GroupName> {
                 widget.groupName = value!;
                 print(widget.groupName);
               },
-              onChanged: (value) {
-                print(value);
-              },
+              // onChanged: (value) {
+              //   print(value);
+              // },
               validator: (value) {
                 RegExp regex = RegExp(r'^.{6,}$');
                 if (value!.isEmpty) {

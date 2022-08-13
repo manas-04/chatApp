@@ -11,11 +11,12 @@ class UserProvider with ChangeNotifier {
   User? user = FirebaseAuth.instance.currentUser;
 
   void getAndSetData() async {
+    // ignore: unused_local_variable
     final userData = await FirebaseFirestore.instance
         .collection('users')
         .doc(user!.uid)
         .get();
-    print(userData.data());
+    // print(userData.data());
     notifyListeners();
   }
 }

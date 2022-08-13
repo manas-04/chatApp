@@ -16,6 +16,7 @@ class GroupImageDialog extends StatefulWidget {
     required this.createdDate,
     required this.membersList,
     required this.showinfo,
+    required this.adminId,
   });
   final String groupName;
   final String groupCode;
@@ -25,6 +26,7 @@ class GroupImageDialog extends StatefulWidget {
   final Timestamp createdDate;
   final List<dynamic> membersList;
   final bool showinfo;
+  final String adminId;
 
   @override
   State<GroupImageDialog> createState() => _GroupImageDialogState();
@@ -101,6 +103,7 @@ class _GroupImageDialogState extends State<GroupImageDialog> {
                             "members": widget.members,
                             "createdDate": widget.createdDate,
                             "membersList": widget.membersList,
+                            "adminId": widget.adminId,
                           });
                         },
                         child: Row(

@@ -24,6 +24,7 @@ class _JoinChatModalSheetState extends State<JoinChatModalSheet> {
   late String adminName;
   late String? groupImage;
   late Timestamp createdDate;
+  late String adminId;
 
   void _findGroup() async {
     final isValid = _formKey.currentState!.validate();
@@ -53,6 +54,7 @@ class _JoinChatModalSheetState extends State<JoinChatModalSheet> {
           adminName = docRef.get('adminUserName') as String;
           groupImage = docRef.get('groupImage') as String?;
           createdDate = docRef.get('createdAt') as Timestamp;
+          adminId = docRef.get('adminId') as String;
 
           await FirebaseFirestore.instance
               .collection('users')
@@ -77,6 +79,7 @@ class _JoinChatModalSheetState extends State<JoinChatModalSheet> {
               "members": members,
               "createdDate": createdDate,
               "membersList": membersList,
+              "adminId": adminId,
             });
           }).catchError((error) {
             print(error);

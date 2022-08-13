@@ -26,6 +26,7 @@ class GroupInbox extends StatelessWidget {
     final int members = routeArgs['members'] as int;
     final Timestamp createdDate = routeArgs['createdDate'] as Timestamp;
     final List<dynamic> membersList = routeArgs['membersList'] as List<dynamic>;
+    final String adminId = routeArgs['adminId'] as String;
 
     return Scaffold(
       appBar: AppBar(
@@ -71,6 +72,7 @@ class GroupInbox extends StatelessWidget {
                   "members": members,
                   "createdDate": createdDate,
                   "membersList": membersList,
+                  "adminId": adminId,
                 });
               } else if (value == 'leaveGroup') {
                 showDialog(

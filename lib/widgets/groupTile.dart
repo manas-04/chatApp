@@ -27,6 +27,7 @@ class _GroupTileState extends State<GroupTile> {
   late String? groupImage;
   late Timestamp createdDate;
   late List<dynamic> membersList;
+  late String adminId;
 
   void _dismiss(String groupCode, bool archive) async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -79,6 +80,7 @@ class _GroupTileState extends State<GroupTile> {
             groupImage = snapshot.data!.get('groupImage') as String?;
             createdDate = snapshot.data!.get('createdAt') as Timestamp;
             membersList = snapshot.data!.get('groupMember') as List<dynamic>;
+            adminId = snapshot.data!.get('adminId') as String;
 
             return Dismissible(
               key: ValueKey(widget.groupCode),
@@ -115,6 +117,7 @@ class _GroupTileState extends State<GroupTile> {
                     "members": members,
                     "createdDate": createdDate,
                     "membersList": membersList,
+                    "adminId": adminId,
                   });
                 },
                 child: ListTile(
@@ -131,6 +134,7 @@ class _GroupTileState extends State<GroupTile> {
                           members: members,
                           membersList: membersList,
                           showinfo: true,
+                          adminId: adminId,
                         ),
                       );
                     },

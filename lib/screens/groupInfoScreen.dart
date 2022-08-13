@@ -30,6 +30,8 @@ class GroupInfoScreen extends StatelessWidget {
     final int members = routeArgs['members'] as int;
     final Timestamp createdDate = routeArgs['createdDate'] as Timestamp;
     final List<dynamic> membersList = routeArgs['membersList'] as List<dynamic>;
+    final String adminId = routeArgs['adminId'] as String;
+
     return AnimatedSwitcher(
       duration: const Duration(seconds: 2),
       child: Scaffold(
@@ -56,6 +58,8 @@ class GroupInfoScreen extends StatelessWidget {
             ),
             MemberTile(
               membersList: membersList,
+              adminId: adminId,
+              groupCode: groupCode,
             ),
             TextButton(
               style: ButtonStyle(

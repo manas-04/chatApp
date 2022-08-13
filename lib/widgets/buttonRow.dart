@@ -1,8 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:chat_app/providers/userProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../widgets/joinGroupModalSheet.dart';
 import '../screens/createGroupScreen.dart';
