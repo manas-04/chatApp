@@ -34,20 +34,21 @@ class NoGroupScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 7.5),
               child: Button(
-                  trySubmit: () {
-                    showModalBottomSheet(
-                        isScrollControlled: true,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(25.0),
-                          ),
+                trySubmit: () {
+                  showModalBottomSheet(
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(25.0),
                         ),
-                        context: context,
-                        builder: (context) {
-                          return const JoinChatModalSheet();
-                        });
-                  },
-                  text: 'Join a Conversation'),
+                      ),
+                      context: context,
+                      builder: (context) {
+                        return const JoinChatModalSheet();
+                      });
+                },
+                text: 'Join a Conversation',
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 7.5),

@@ -11,6 +11,7 @@ class MessageBubble extends StatelessWidget {
   final String userImage;
   final Key key;
   final String groupCode;
+  final String type;
 
   const MessageBubble({
     required this.message,
@@ -20,6 +21,7 @@ class MessageBubble extends StatelessWidget {
     required this.userImage,
     required this.key,
     required this.groupCode,
+    required this.type,
   });
 
   @override
@@ -102,13 +104,36 @@ class MessageBubble extends StatelessWidget {
                       const SizedBox(
                         height: 4,
                       ),
-                      Text(
-                        message,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
+                      if (type == "text")
+                        Text(
+                          message,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
                         ),
-                      ),
+                      if (type == "sticker")
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: const Radius.circular(14),
+                              topRight: isSameUser
+                                  ? const Radius.circular(0)
+                                  : const Radius.circular(14),
+                              bottomLeft: !isSameUser
+                                  ? const Radius.circular(0)
+                                  : const Radius.circular(14),
+                              bottomRight: const Radius.circular(14),
+                            ),
+                          ),
+                          height: 120,
+                          width: 120,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.network(message),
+                          ),
+                        ),
                     ],
                   ),
                 ),
@@ -117,8 +142,8 @@ class MessageBubble extends StatelessWidget {
             // Positioned(
             //   top: -20,
             //   left: !isSameUser
-            // //      ? MediaQuery.of(context).size.width * 0.38
-            //       : MediaQuery.of(context).size.width * 0.52,
+            // //       ? MediaQuery.of(context).size.width * 0.38
+            //       : MediaQuery.of(context).size.width * 0.48,
             //   child: CircleAvatar(
             //     backgroundImage: NetworkImage(userImage),
             //   ),

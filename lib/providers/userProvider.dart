@@ -16,7 +16,7 @@ class UserProvider with ChangeNotifier {
         .collection('users')
         .doc(user!.uid)
         .get();
-    // print(userData.data());
+
     notifyListeners();
   }
 }

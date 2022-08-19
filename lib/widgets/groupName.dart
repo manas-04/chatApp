@@ -1,8 +1,9 @@
-// ignore_for_file: file_names, use_key_in_widget_constructors, must_be_immutable, avoid_print
+// ignore_for_file: file_names, use_key_in_widget_constructors, must_be_immutable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../screens/InboxScreen.dart';
 
@@ -70,11 +71,11 @@ class _GroupNameState extends State<GroupName> {
             "membersList": [user.uid],
             "adminId": user.uid,
           }).catchError((error) {
-            print(error);
+            Fluttertoast.showToast(msg: error);
           }),
         );
       }).catchError((error) {
-        print(error);
+        Fluttertoast.showToast(msg: error);
       });
       Future.delayed(const Duration(milliseconds: 2000), () {
         setState(() {
@@ -114,11 +115,7 @@ class _GroupNameState extends State<GroupName> {
               ),
               onSaved: (value) {
                 widget.groupName = value!;
-                print(widget.groupName);
               },
-              // onChanged: (value) {
-              //   print(value);
-              // },
               validator: (value) {
                 RegExp regex = RegExp(r'^.{6,}$');
                 if (value!.isEmpty) {

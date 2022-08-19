@@ -43,7 +43,8 @@ class Messages extends StatelessWidget {
                 itemCount: document.length,
                 reverse: true,
                 itemBuilder: ((context, index) => MessageBubble(
-                      message: document[index]['text'],
+                      message: document[index]['text'] ??
+                          document[index]['stickerUrl'],
                       isSameUser:
                           document[index]['userId'] == snapShot.data!.uid,
                       userName: document[index]['username'],
@@ -51,6 +52,7 @@ class Messages extends StatelessWidget {
                       userImage: document[index]['imageUrl'],
                       key: ValueKey(document[index].id),
                       groupCode: groupCode,
+                      type: document[index]['type'],
                     )),
               );
             });

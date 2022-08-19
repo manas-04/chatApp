@@ -1,8 +1,9 @@
 // ignore_for_file: file_names, use_key_in_widget_constructors
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../widgets/stickerButton.dart';
 
 class NewMessage extends StatefulWidget {
   const NewMessage(this.groupCode);
@@ -34,6 +35,8 @@ class _NewMessageState extends State<NewMessage> {
       'userId': user.uid,
       'imageUrl': userData['imageUrl'],
       'username': userData['username'],
+      'stickerUrl': null,
+      'type': 'text'
     });
     setState(() {
       _enteredMessage = '';
@@ -55,6 +58,10 @@ class _NewMessageState extends State<NewMessage> {
             margin: const EdgeInsets.only(top: 8),
             child: Row(
               children: [
+                StickerButton(
+                  groupCode: widget.groupCode,
+                  textController: controller,
+                ),
                 Expanded(
                   child: TextField(
                     controller: controller,

@@ -70,11 +70,12 @@ class _AuthScreenState extends State<AuthScreen> {
             "gender": '',
             "groups": [],
             "archivedGroups": [],
+            "stickerId": [],
+            "stickerUrl": []
           }).then((value) {
             Fluttertoast.showToast(msg: 'User created successfully !!');
           }).catchError((error) {
-            // ignore: avoid_print
-            print(error);
+            Fluttertoast.showToast(msg: error);
           });
         }).catchError((error) {
           Fluttertoast.showToast(msg: error!.message);

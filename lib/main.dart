@@ -39,8 +39,6 @@ class MyApp extends StatelessWidget {
         GroupSettingsScreen.routeName: (context) => GroupSettingsScreen(),
       },
       onGenerateRoute: (settings) {
-        // ignore: avoid_print
-        print(settings.arguments);
         return null;
       },
       onUnknownRoute: (settings) {

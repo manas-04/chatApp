@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, avoid_print
+// ignore_for_file: file_names
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +82,7 @@ class _JoinChatModalSheetState extends State<JoinChatModalSheet> {
               "adminId": adminId,
             });
           }).catchError((error) {
-            print(error);
+            Fluttertoast.showToast(msg: error);
           });
         }
       } else {

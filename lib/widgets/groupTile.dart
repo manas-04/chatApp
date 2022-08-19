@@ -37,27 +37,31 @@ class _GroupTileState extends State<GroupTile> {
             .collection('users')
             .doc(user!.uid)
             .update({
-            "archivedGroups": FieldValue.arrayRemove([groupCode])
+            "groups": FieldValue.arrayUnion([groupCode])
           })
         : await FirebaseFirestore.instance
             .collection('users')
             .doc(user!.uid)
             .update({
-            "groups": FieldValue.arrayRemove([groupCode])
+            "archivedGroups": FieldValue.arrayUnion([groupCode])
           });
+
     archive
         ? await FirebaseFirestore.instance
             .collection('users')
             .doc(user.uid)
             .update({
-            "groups": FieldValue.arrayUnion([groupCode])
+            "archivedGroups": FieldValue.arrayRemove([groupCode])
           })
         : await FirebaseFirestore.instance
             .collection('users')
             .doc(user.uid)
             .update({
-            "archivedGroups": FieldValue.arrayUnion([groupCode])
+            "groups": FieldValue.arrayRemove([groupCode])
           });
+    Future.delayed(
+      const Duration(milliseconds: 2000),
+    );
   }
 
   @override
