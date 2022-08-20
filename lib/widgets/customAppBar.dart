@@ -1,7 +1,9 @@
 // ignore_for_file: file_names, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
+
 import '../widgets/logOutDialogBox.dart';
+import '../screens/userInfoScreen.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final bool showSearch;
@@ -23,7 +25,9 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         if (showSearch == true)
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(UserInfoScreen.routeName);
+            },
             icon: const Icon(Icons.person_rounded),
           ),
         IconButton(

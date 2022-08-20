@@ -82,7 +82,9 @@ class UserStickers extends StatelessWidget {
                                         255, 206, 206, 206),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: Image.network(data[index]),
+                                  child: Image.network(
+                                    data[index],
+                                  ),
                                 ),
                               );
                             }),
