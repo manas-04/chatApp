@@ -19,4 +19,6 @@ class UserProvider with ChangeNotifier {
 
     notifyListeners();
   }
+
+  void getUser() {}
 }

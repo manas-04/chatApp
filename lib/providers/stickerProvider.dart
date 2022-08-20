@@ -54,4 +54,6 @@ class StickerProvider with ChangeNotifier {
     Navigator.of(context).pop();
     notifyListeners();
   }
+
+  void deleteStickerFromCollection() {}
 }

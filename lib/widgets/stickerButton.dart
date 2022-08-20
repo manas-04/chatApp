@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../widgets/userSticker.dart';
 import '../screens/stickersScreen.dart';
@@ -76,7 +77,9 @@ class StickerButton extends StatelessWidget {
               );
             });
       },
-      icon: const Icon(Icons.face_outlined),
+      icon: SvgPicture.asset(
+        "assets/images/mood.svg",
+      ),
     );
   }
 }
