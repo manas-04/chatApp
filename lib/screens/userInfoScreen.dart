@@ -55,7 +55,9 @@ class UserInfoScreen extends StatelessWidget {
                           alignment: Alignment.center,
                           child: SizedBox(
                             height: size.height * 0.1,
-                            child: const Text('Loading....'),
+                            child: const Center(
+                              child: CircularProgressIndicator(),
+                            ),
                           ),
                         );
                       }
