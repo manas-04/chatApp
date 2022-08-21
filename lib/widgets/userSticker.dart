@@ -33,75 +33,67 @@ class UserStickers extends StatelessWidget {
             final id = dataSnapshot.data!.get('stickerId') as List<dynamic>;
             return data.isNotEmpty
                 ? Expanded(
-                    child: MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider(
-                          create: (context) => StickerProvider(),
-                        )
-                      ],
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: GridView.builder(
-                            scrollDirection: Axis.vertical,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4,
-                              crossAxisSpacing: 2.0,
-                              mainAxisSpacing: 2.0,
-                            ),
-                            physics: const ScrollPhysics(),
-                            itemCount: data.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onLongPress: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        RemoveStickerDialogBox(
-                                      id: id[index],
-                                      imageUrl: data[index],
-                                    ),
-                                  );
-                                },
-                                onTap: () {
-                                  Provider.of<StickerProvider>(
-                                    context,
-                                    listen: false,
-                                  ).sendSticker(
-                                    groupCode,
-                                    data[index],
-                                    textController,
-                                    context,
-                                  );
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.all(5),
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                        255, 206, 206, 206),
-                                    borderRadius: BorderRadius.circular(10),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: GridView.builder(
+                          scrollDirection: Axis.vertical,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 4,
+                            crossAxisSpacing: 2.0,
+                            mainAxisSpacing: 2.0,
+                          ),
+                          physics: const ScrollPhysics(),
+                          itemCount: data.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onLongPress: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => RemoveStickerDialogBox(
+                                    id: id[index],
+                                    imageUrl: data[index],
                                   ),
-                                  child: Image.network(
-                                    data[index],
-                                    frameBuilder: ((context, child, frame,
-                                            wasSynchronouslyLoaded) =>
-                                        child),
-                                    loadingBuilder:
-                                        (context, child, loadingProgress) {
-                                      if (loadingProgress == null) {
-                                        return child;
-                                      } else {
-                                        return const Center(
-                                          child: CircularProgressIndicator(),
-                                        );
-                                      }
-                                    },
-                                  ),
+                                );
+                              },
+                              onTap: () {
+                                Provider.of<StickerProvider>(
+                                  context,
+                                  listen: false,
+                                ).sendSticker(
+                                  groupCode,
+                                  data[index],
+                                  textController,
+                                  context,
+                                );
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.all(5),
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 206, 206, 206),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                              );
-                            }),
-                      ),
+                                child: Image.network(
+                                  data[index],
+                                  frameBuilder: ((context, child, frame,
+                                          wasSynchronouslyLoaded) =>
+                                      child),
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
+                            );
+                          }),
                     ),
                   )
                 : Padding(

@@ -1,11 +1,12 @@
 // ignore_for_file: file_names
 
-import 'package:chat_app/providers/userGroupProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+
+import '../providers/userGroupProvider.dart';
 
 class MemberTile extends StatelessWidget {
   const MemberTile({
@@ -25,68 +26,61 @@ class MemberTile extends StatelessWidget {
     final bool isUserAdmin = user!.uid == adminId;
 
     return Expanded(
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => UserGroupProvider(),
-          )
-        ],
-        child: ListView.builder(
-          padding: EdgeInsets.zero,
-          itemCount: membersList.length,
-          itemBuilder: (context, index) {
-            return SingleChildScrollView(
-              child: FutureBuilder<DocumentSnapshot>(
-                future: Future.value(
-                  FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(membersList[index])
-                      .get(),
-                ),
-                builder: (context, userSnapshot) {
-                  if (userSnapshot.hasData &&
-                      userSnapshot.connectionState == ConnectionState.done) {
-                    final String userName =
-                        userSnapshot.data!.get('username') as String;
-                    final String email =
-                        userSnapshot.data!.get('email') as String;
-                    final String userImage =
-                        userSnapshot.data!.get('imageUrl') as String;
-                    return Card(
-                      elevation: 2,
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 2,
-                      ),
-                      child: ListTile(
-                          title: Text(userName),
-                          subtitle: Text(email),
-                          leading: CircleAvatar(
-                            backgroundColor:
-                                const Color.fromARGB(255, 212, 212, 212),
-                            backgroundImage: NetworkImage(userImage),
-                          ),
-                          trailing: isUserAdmin && adminId != membersList[index]
-                              ? RemoveMemberButton(
-                                  memberId: membersList[index],
-                                  groupCode: groupCode,
-                                  user: user,
-                                  parentContext: context,
-                                )
-                              : null),
-                    );
-                  }
-                  return const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(12.0),
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                },
+      child: ListView.builder(
+        padding: EdgeInsets.zero,
+        itemCount: membersList.length,
+        itemBuilder: (context, index) {
+          return SingleChildScrollView(
+            child: FutureBuilder<DocumentSnapshot>(
+              future: Future.value(
+                FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(membersList[index])
+                    .get(),
               ),
-            );
-          },
-        ),
+              builder: (context, userSnapshot) {
+                if (userSnapshot.hasData &&
+                    userSnapshot.connectionState == ConnectionState.done) {
+                  final String userName =
+                      userSnapshot.data!.get('username') as String;
+                  final String email =
+                      userSnapshot.data!.get('email') as String;
+                  final String userImage =
+                      userSnapshot.data!.get('imageUrl') as String;
+                  return Card(
+                    elevation: 2,
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 2,
+                    ),
+                    child: ListTile(
+                        title: Text(userName),
+                        subtitle: Text(email),
+                        leading: CircleAvatar(
+                          backgroundColor:
+                              const Color.fromARGB(255, 212, 212, 212),
+                          backgroundImage: NetworkImage(userImage),
+                        ),
+                        trailing: isUserAdmin && adminId != membersList[index]
+                            ? RemoveMemberButton(
+                                memberId: membersList[index],
+                                groupCode: groupCode,
+                                user: user,
+                                parentContext: context,
+                              )
+                            : null),
+                  );
+                }
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }

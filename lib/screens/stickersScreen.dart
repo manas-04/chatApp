@@ -30,72 +30,65 @@ class StickersScreen extends StatelessWidget {
             final document = snapshot.data!.docs;
             return Padding(
               padding: const EdgeInsets.all(10.0),
-              child: MultiProvider(
-                providers: [
-                  ChangeNotifierProvider(
-                    create: (context) => StickerProvider(),
-                  )
-                ],
-                child: ListView.builder(
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            height: size.height * 0.1,
-                            width: size.width * 0.22,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
+              child: ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          height: size.height * 0.1,
+                          width: size.width * 0.22,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey,
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Image.network(
-                                  document[index]['imageUrl'],
-                                  frameBuilder: ((context, child, frame,
-                                          wasSynchronouslyLoaded) =>
-                                      child),
-                                  loadingBuilder:
-                                      (context, child, loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    } else {
-                                      return const Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    }
-                                  },
-                                ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.network(
+                                document[index]['imageUrl'],
+                                frameBuilder: ((context, child, frame,
+                                        wasSynchronouslyLoaded) =>
+                                    child),
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  } else {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                },
                               ),
                             ),
                           ),
-                          TextButton.icon(
-                            icon: const Icon(
-                              Icons.download_rounded,
-                              color: Colors.lightBlue,
-                            ),
-                            onPressed: () {
-                              Provider.of<StickerProvider>(
-                                context,
-                                listen: false,
-                              ).addStickerToUser(document[index].id,
-                                  document[index]['imageUrl']);
-                            },
-                            label: const Text(
-                              'Add Sticker',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                        ),
+                        TextButton.icon(
+                          icon: const Icon(
+                            Icons.download_rounded,
+                            color: Colors.lightBlue,
+                          ),
+                          onPressed: () {
+                            Provider.of<StickerProvider>(
+                              context,
+                              listen: false,
+                            ).addStickerToUser(document[index].id,
+                                document[index]['imageUrl']);
+                          },
+                          label: const Text(
+                            'Add Sticker',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                },
               ),
             );
           }),

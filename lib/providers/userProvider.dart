@@ -5,12 +5,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../models/userModel.dart';
+import '../screens/authScreen.dart';
 
 class UserProvider with ChangeNotifier {
   late LocalUser currentUser;
-  User? user = FirebaseAuth.instance.currentUser;
 
   void getAndSetData() async {
+    User? user = FirebaseAuth.instance.currentUser;
     // ignore: unused_local_variable
     final userData = await FirebaseFirestore.instance
         .collection('users')
@@ -20,5 +21,79 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void getUser() {}
+  void deleteUser(BuildContext context) async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    final doc = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get();
+    final groups = doc.data()!['groups'] as List<dynamic>;
+    final archivedGroups = doc.data()!['archivedGroups'] as List<dynamic>;
+
+    for (var element in groups) {
+      var docRef = await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(element)
+          .collection('details')
+          .doc('generalDetails')
+          .get();
+      final members = docRef.get('noOfPeople') as int;
+
+      if (members == 1) {
+        await FirebaseFirestore.instance
+            .collection('groups')
+            .doc(element)
+            .collection('details')
+            .doc('generalDetails')
+            .delete();
+      } else {
+        await FirebaseFirestore.instance
+            .collection('groups')
+            .doc(element)
+            .collection('details')
+            .doc('generalDetails')
+            .update({
+          "noOfPeople": members - 1,
+          "groupMember": FieldValue.arrayRemove([user.uid])
+        });
+      }
+    }
+
+    for (var element in archivedGroups) {
+      var docRef = await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(element)
+          .collection('details')
+          .doc('generalDetails')
+          .get();
+      final members = docRef.get('noOfPeople') as int;
+
+      if (members == 1) {
+        await FirebaseFirestore.instance
+            .collection('groups')
+            .doc(element)
+            .collection('details')
+            .doc('generalDetails')
+            .delete();
+      } else {
+        await FirebaseFirestore.instance
+            .collection('groups')
+            .doc(element)
+            .collection('details')
+            .doc('generalDetails')
+            .update({
+          "noOfPeople": members - 1,
+          "groupMember": FieldValue.arrayRemove([user.uid])
+        });
+      }
+    }
+    await FirebaseFirestore.instance.collection("users").doc(user.uid).delete();
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      AuthScreen.routeName,
+      (Route<dynamic> route) => false,
+      arguments: false,
+    );
+    user.delete();
+  }
 }
