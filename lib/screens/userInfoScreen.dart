@@ -5,12 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 import '../constants.dart';
-import '../providers/userProvider.dart';
-
-// import '../widgets/logOutDialogBox.dart';
+import '../widgets/UserDetail.dart';
+import '../widgets/deleteUserDialogBox.dart';
 
 class UserInfoScreen extends StatelessWidget {
   const UserInfoScreen({Key? key}) : super(key: key);
@@ -197,135 +195,6 @@ class UserInfoScreen extends StatelessWidget {
         }
         return const Scaffold();
       },
-    );
-  }
-}
-
-class DeleteUserDialogBox extends StatefulWidget {
-  const DeleteUserDialogBox({
-    Key? key,
-    required this.parentContext,
-  }) : super(key: key);
-  final BuildContext parentContext;
-
-  @override
-  State<DeleteUserDialogBox> createState() => _DeleteUserDialogBoxState();
-}
-
-class _DeleteUserDialogBoxState extends State<DeleteUserDialogBox> {
-  bool _isLoading = false;
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.width * 0.55,
-          width: MediaQuery.of(context).size.width * 0.8,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: Text(
-                  'Are you sure ?',
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12),
-                child: Text(
-                  'Deleting this account will result in complete removal of your account from the database and all the information associated with it.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-              if (_isLoading)
-                const Center(
-                  child: CircularProgressIndicator(),
-                ),
-              if (!_isLoading)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, 'Cancel'),
-                      child: const Text('No'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          _isLoading = true;
-                        });
-                        Provider.of<UserProvider>(context, listen: false)
-                            .deleteUser(context);
-                      },
-                      child: const Text('Yes'),
-                    ),
-                  ],
-                )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class DetailInfo extends StatelessWidget {
-  const DetailInfo({
-    Key? key,
-    required this.info,
-    required this.infoTitle,
-    required this.size,
-  }) : super(key: key);
-
-  final String info;
-  final String infoTitle;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 4,
-        bottom: 4,
-        left: 2,
-        right: 10,
-      ),
-      child: RichText(
-        text: TextSpan(
-          style: GoogleFonts.raleway(
-            fontSize: size,
-            color: Colors.black,
-          ),
-          children: info.isEmpty
-              ? [
-                  TextSpan(
-                    text: infoTitle,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const TextSpan(
-                    text: ' : User has not updated it yet!',
-                  ),
-                ]
-              : [
-                  TextSpan(
-                    text: infoTitle,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  TextSpan(
-                    text: ' : $info ',
-                  ),
-                ],
-        ),
-      ),
     );
   }
 }
