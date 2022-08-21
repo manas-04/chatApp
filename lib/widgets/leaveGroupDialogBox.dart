@@ -43,6 +43,15 @@ class LeaveGroupDialogBox extends StatelessWidget {
               .collection('details')
               .doc('generalDetails')
               .delete();
+          final instance = FirebaseFirestore.instance;
+          final batch = instance.batch();
+          var collection =
+              instance.collection('groups').doc(groupCode).collection("chats");
+          var snapshots = await collection.get();
+          for (var doc in snapshots.docs) {
+            batch.delete(doc.reference);
+          }
+          await batch.commit();
         }
         final doc = await FirebaseFirestore.instance
             .collection('users')

@@ -1,15 +1,14 @@
 // ignore_for_file: file_names
 
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../models/userModel.dart';
 import '../screens/authScreen.dart';
 
 class UserProvider with ChangeNotifier {
-  late LocalUser currentUser;
-
   void getAndSetData() async {
     User? user = FirebaseAuth.instance.currentUser;
     // ignore: unused_local_variable
@@ -47,6 +46,15 @@ class UserProvider with ChangeNotifier {
             .collection('details')
             .doc('generalDetails')
             .delete();
+        final instance = FirebaseFirestore.instance;
+        final batch = instance.batch();
+        var collection =
+            instance.collection('groups').doc(element).collection("chats");
+        var snapshots = await collection.get();
+        for (var doc in snapshots.docs) {
+          batch.delete(doc.reference);
+        }
+        await batch.commit();
       } else {
         await FirebaseFirestore.instance
             .collection('groups')
@@ -76,6 +84,15 @@ class UserProvider with ChangeNotifier {
             .collection('details')
             .doc('generalDetails')
             .delete();
+        final instance = FirebaseFirestore.instance;
+        final batch = instance.batch();
+        var collection =
+            instance.collection('groups').doc(element).collection("chats");
+        var snapshots = await collection.get();
+        for (var doc in snapshots.docs) {
+          batch.delete(doc.reference);
+        }
+        await batch.commit();
       } else {
         await FirebaseFirestore.instance
             .collection('groups')

@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -184,7 +185,10 @@ class UserInfoScreen extends StatelessWidget {
                       child: IconButton(
                         icon: const Icon(Icons.edit),
                         iconSize: 30,
-                        onPressed: () {},
+                        onPressed: () {
+                          Fluttertoast.showToast(
+                              msg: "This feature will be added soon.");
+                        },
                       ),
                     ))
               ],

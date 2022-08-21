@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class StickerProvider with ChangeNotifier {
-  User? user = FirebaseAuth.instance.currentUser;
-
   void addStickerToUser(String id, String imageUrl) async {
+    User? user = FirebaseAuth.instance.currentUser;
+
     final doc = await FirebaseFirestore.instance
         .collection('users')
         .doc(user!.uid)
@@ -20,7 +20,7 @@ class StickerProvider with ChangeNotifier {
     } else {
       await FirebaseFirestore.instance
           .collection('users')
-          .doc(user!.uid)
+          .doc(user.uid)
           .update({
         "stickerId": FieldValue.arrayUnion([id]),
         "stickerUrl": FieldValue.arrayUnion([imageUrl])
@@ -32,6 +32,8 @@ class StickerProvider with ChangeNotifier {
 
   void sendSticker(String groupCode, String imageUrl,
       TextEditingController controller, BuildContext context) async {
+    User? user = FirebaseAuth.instance.currentUser;
+
     FocusScope.of(context).unfocus();
     final userData = await FirebaseFirestore.instance
         .collection('users')
@@ -45,7 +47,7 @@ class StickerProvider with ChangeNotifier {
         .add({
       'text': null,
       'createdAt': Timestamp.now(),
-      'userId': user!.uid,
+      'userId': user.uid,
       'stickerUrl': imageUrl,
       'imageUrl': userData['imageUrl'],
       'username': userData['username'],
