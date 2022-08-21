@@ -55,8 +55,22 @@ class StickersScreen extends StatelessWidget {
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child:
-                                    Image.network(document[index]['imageUrl']),
+                                child: Image.network(
+                                  document[index]['imageUrl'],
+                                  frameBuilder: ((context, child, frame,
+                                          wasSynchronouslyLoaded) =>
+                                      child),
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                  },
+                                ),
                               ),
                             ),
                           ),

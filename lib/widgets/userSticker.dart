@@ -84,6 +84,19 @@ class UserStickers extends StatelessWidget {
                                   ),
                                   child: Image.network(
                                     data[index],
+                                    frameBuilder: ((context, child, frame,
+                                            wasSynchronouslyLoaded) =>
+                                        child),
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child;
+                                      } else {
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      }
+                                    },
                                   ),
                                 ),
                               );

@@ -131,7 +131,22 @@ class MessageBubble extends StatelessWidget {
                           width: 120,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Image.network(message),
+                            child: Image.network(
+                              message,
+                              frameBuilder: ((context, child, frame,
+                                      wasSynchronouslyLoaded) =>
+                                  child),
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                              },
+                            ),
                           ),
                         ),
                     ],

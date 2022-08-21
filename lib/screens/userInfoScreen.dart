@@ -44,6 +44,22 @@ class UserInfoScreen extends StatelessWidget {
                   child: Image.network(
                     userImage,
                     fit: BoxFit.fitHeight,
+                    frameBuilder:
+                        ((context, child, frame, wasSynchronouslyLoaded) =>
+                            child),
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      } else {
+                        return Align(
+                          alignment: Alignment.center,
+                          child: SizedBox(
+                            height: size.height * 0.1,
+                            child: const Text('Loading....'),
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ),
                 Align(
