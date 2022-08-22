@@ -1,7 +1,9 @@
 // ignore_for_file: file_names, use_key_in_widget_constructors
+import 'package:chat_app/providers/messageProvider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/stickerButton.dart';
 
@@ -18,30 +20,15 @@ class _NewMessageState extends State<NewMessage> {
   var _enteredMessage = '';
 
   void _sendMessage() async {
-    FocusScope.of(context).unfocus();
-    User? user = FirebaseAuth.instance.currentUser;
-    final userData = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .get();
-
-    FirebaseFirestore.instance
-        .collection('groups')
-        .doc(widget.groupCode)
-        .collection('chats')
-        .add({
-      'text': _enteredMessage,
-      'createdAt': Timestamp.now(),
-      'userId': user.uid,
-      'imageUrl': userData['imageUrl'],
-      'username': userData['username'],
-      'stickerUrl': null,
-      'type': 'text'
-    });
+    Provider.of<MessageProvider>(context, listen: false).sendMessage(
+      context: context,
+      controller: controller,
+      enteredMessage: _enteredMessage,
+      groupCode: widget.groupCode,
+    );
     setState(() {
       _enteredMessage = '';
     });
-    controller.clear();
   }
 
   @override

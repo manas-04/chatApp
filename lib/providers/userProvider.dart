@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
 
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -112,5 +110,11 @@ class UserProvider with ChangeNotifier {
       arguments: false,
     );
     user.delete();
+  }
+}
+
+class UserHelper {
+  Future<DocumentSnapshot<Map<String, dynamic>>> fetchUser(User? user) {
+    return FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
   }
 }

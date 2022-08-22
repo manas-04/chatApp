@@ -1,9 +1,8 @@
 // ignore_for_file: file_names, use_key_in_widget_constructors
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../screens/chatScreen.dart';
+import '../providers/userGroupProvider.dart';
 
 class LeaveGroupDialogBox extends StatelessWidget {
   final String groupCode;
@@ -12,77 +11,6 @@ class LeaveGroupDialogBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late int members;
-
-    void _leaveGroup() async {
-      User? user = FirebaseAuth.instance.currentUser;
-
-      var docRef = await FirebaseFirestore.instance
-          .collection('groups')
-          .doc(groupCode)
-          .collection('details')
-          .doc('generalDetails')
-          .get();
-
-      if (docRef.exists) {
-        members = docRef.get('noOfPeople') as int;
-        if (members != 1) {
-          await FirebaseFirestore.instance
-              .collection('groups')
-              .doc(groupCode)
-              .collection('details')
-              .doc('generalDetails')
-              .update({
-            "noOfPeople": members - 1,
-            "groupMember": FieldValue.arrayRemove([user!.uid])
-          });
-        } else if (members == 1) {
-          await FirebaseFirestore.instance
-              .collection('groups')
-              .doc(groupCode)
-              .collection('details')
-              .doc('generalDetails')
-              .delete();
-          final instance = FirebaseFirestore.instance;
-          final batch = instance.batch();
-          var collection =
-              instance.collection('groups').doc(groupCode).collection("chats");
-          var snapshots = await collection.get();
-          for (var doc in snapshots.docs) {
-            batch.delete(doc.reference);
-          }
-          await batch.commit();
-        }
-        final doc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user!.uid)
-            .get();
-        final archivedGroups = doc.data()!['archivedGroups'] as List<dynamic>;
-
-        if (archivedGroups.contains(groupCode)) {
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(user.uid)
-              .update({
-            'archivedGroups': FieldValue.arrayRemove([groupCode])
-          });
-        } else {
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(user.uid)
-              .update({
-            'groups': FieldValue.arrayRemove([groupCode])
-          });
-        }
-
-        Navigator.pop(context);
-        Navigator.pushReplacementNamed(
-          context,
-          ChatScreen.routeName,
-        );
-      }
-    }
-
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
@@ -113,7 +41,8 @@ class LeaveGroupDialogBox extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      _leaveGroup();
+                      Provider.of<UserGroupProvider>(context, listen: false)
+                          .leaveGroup(groupCode, context);
                     },
                     child: const Text('Yes'),
                   ),

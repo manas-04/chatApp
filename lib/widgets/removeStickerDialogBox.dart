@@ -1,20 +1,18 @@
 // ignore_for_file: must_be_immutable, file_names
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/stickerProvider.dart';
 
 class RemoveStickerDialogBox extends StatelessWidget {
-  RemoveStickerDialogBox({
+  const RemoveStickerDialogBox({
     Key? key,
     required this.id,
     required this.imageUrl,
   }) : super(key: key);
   final String id;
   final String imageUrl;
-
-  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -46,28 +44,14 @@ class RemoveStickerDialogBox extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () async {
-                      final doc = await FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(user!.uid)
-                          .get();
-
-                      final stickerIds =
-                          doc.data()!['stickerId'] as List<dynamic>;
-                      if (stickerIds.contains(id)) {
-                        await FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(user!.uid)
-                            .update({
-                          "stickerId": FieldValue.arrayRemove([id]),
-                          "stickerUrl": FieldValue.arrayRemove([imageUrl])
-                        });
-                        Fluttertoast.showToast(
-                            msg: 'Sticker removed from your collection');
-                      } else {
-                        Fluttertoast.showToast(
-                            msg: 'This sticker has been already removed.');
-                      }
-                      Navigator.pop(context);
+                      Provider.of<StickerProvider>(
+                        context,
+                        listen: false,
+                      ).deleteStickerFromCollection(
+                        context,
+                        id,
+                        imageUrl,
+                      );
                     },
                     child: const Text('Yes'),
                   ),

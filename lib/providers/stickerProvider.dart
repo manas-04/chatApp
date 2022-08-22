@@ -5,14 +5,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../providers/userProvider.dart';
+
 class StickerProvider with ChangeNotifier {
   void addStickerToUser(String id, String imageUrl) async {
     User? user = FirebaseAuth.instance.currentUser;
 
-    final doc = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .get();
+    final doc = await UserHelper().fetchUser(user);
 
     final stickerIds = doc.data()!['stickerId'] as List<dynamic>;
     if (stickerIds.contains(id)) {
@@ -20,7 +19,7 @@ class StickerProvider with ChangeNotifier {
     } else {
       await FirebaseFirestore.instance
           .collection('users')
-          .doc(user.uid)
+          .doc(user!.uid)
           .update({
         "stickerId": FieldValue.arrayUnion([id]),
         "stickerUrl": FieldValue.arrayUnion([imageUrl])
@@ -35,10 +34,7 @@ class StickerProvider with ChangeNotifier {
     User? user = FirebaseAuth.instance.currentUser;
 
     FocusScope.of(context).unfocus();
-    final userData = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .get();
+    final userData = await UserHelper().fetchUser(user);
 
     FirebaseFirestore.instance
         .collection('groups')
@@ -47,7 +43,7 @@ class StickerProvider with ChangeNotifier {
         .add({
       'text': null,
       'createdAt': Timestamp.now(),
-      'userId': user.uid,
+      'userId': user!.uid,
       'stickerUrl': imageUrl,
       'imageUrl': userData['imageUrl'],
       'username': userData['username'],
@@ -57,5 +53,27 @@ class StickerProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteStickerFromCollection() {}
+  void deleteStickerFromCollection(
+    BuildContext context,
+    String id,
+    String imageUrl,
+  ) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    final doc = await UserHelper().fetchUser(user);
+    final stickerIds = doc.data()!['stickerId'] as List<dynamic>;
+
+    if (stickerIds.contains(id)) {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .update({
+        "stickerId": FieldValue.arrayRemove([id]),
+        "stickerUrl": FieldValue.arrayRemove([imageUrl])
+      });
+      Fluttertoast.showToast(msg: 'Sticker removed from your collection');
+    } else {
+      Fluttertoast.showToast(msg: 'This sticker has been already removed.');
+    }
+    Navigator.pop(context);
+  }
 }
