@@ -1,28 +1,30 @@
 // ignore_for_file: file_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../screens/editProfileScreen.dart';
 import '../constants.dart';
 import '../widgets/UserDetail.dart';
 import '../widgets/deleteUserDialogBox.dart';
 
 class UserInfoScreen extends StatelessWidget {
-  const UserInfoScreen({Key? key}) : super(key: key);
+  const UserInfoScreen(
+      {Key? key, required this.userId, required this.showEditAndDeleteButton})
+      : super(key: key);
   static const String routeName = "/userInfoScreen";
+  final String userId;
+  final bool showEditAndDeleteButton;
 
   @override
   Widget build(BuildContext context) {
-    User? user = FirebaseAuth.instance.currentUser;
     final size = MediaQuery.of(context).size;
 
     return StreamBuilder<DocumentSnapshot>(
       stream: FirebaseFirestore.instance
           .collection('users')
-          .doc(user!.uid)
+          .doc(userId)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData &&
@@ -43,7 +45,9 @@ class UserInfoScreen extends StatelessWidget {
               children: [
                 Container(
                   width: double.infinity,
-                  height: size.height * 0.65,
+                  height: showEditAndDeleteButton
+                      ? size.height * 0.65
+                      : size.height * 0.7,
                   decoration: const BoxDecoration(
                     color: Color.fromARGB(255, 206, 206, 206),
                   ),
@@ -73,8 +77,13 @@ class UserInfoScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: Container(
-                    margin: EdgeInsets.only(bottom: size.height * 0.06),
-                    padding: const EdgeInsets.all(10),
+                    margin: EdgeInsets.only(
+                        bottom:
+                            showEditAndDeleteButton ? size.height * 0.06 : 20),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: showEditAndDeleteButton ? 10 : 0,
+                    ),
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
@@ -82,7 +91,9 @@ class UserInfoScreen extends StatelessWidget {
                       ),
                       color: Colors.white,
                     ),
-                    height: size.height * 0.36,
+                    height: showEditAndDeleteButton
+                        ? size.height * 0.36
+                        : size.height * 0.33,
                     width: double.infinity,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 24, left: 16),
@@ -150,45 +161,75 @@ class UserInfoScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: kErrorColor,
-                    ),
-                    width: double.infinity,
-                    child: TextButton(
-                      child: Text(
-                        'Delete account',
-                        style: GoogleFonts.montserrat(
-                            color: Colors.white, fontSize: 18),
+                if (showEditAndDeleteButton)
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: kErrorColor,
                       ),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return DeleteUserDialogBox(
-                                parentContext: context,
-                              );
-                            });
-                      },
-                    ),
-                  ),
-                ),
-                Positioned(
-                    right: size.width * 0.08,
-                    bottom: size.height * 0.39,
-                    child: CircleAvatar(
-                      radius: 28,
-                      child: IconButton(
-                        icon: const Icon(Icons.edit),
-                        iconSize: 30,
+                      width: double.infinity,
+                      child: TextButton(
+                        child: Text(
+                          'Delete account',
+                          style: GoogleFonts.montserrat(
+                              color: Colors.white, fontSize: 18),
+                        ),
                         onPressed: () {
-                          Fluttertoast.showToast(
-                              msg: "This feature will be added soon.");
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return DeleteUserDialogBox(
+                                  parentContext: context,
+                                );
+                              });
                         },
                       ),
-                    ))
+                    ),
+                  ),
+                if (showEditAndDeleteButton)
+                  Positioned(
+                      right: size.width * 0.08,
+                      bottom: size.height * 0.39,
+                      child: CircleAvatar(
+                        radius: 28,
+                        child: IconButton(
+                          icon: const Icon(Icons.edit),
+                          iconSize: 30,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        EditProfileScreen(
+                                  userId: userId,
+                                  userName: username,
+                                  email: email,
+                                  bio: bio,
+                                  gender: gender,
+                                  contactNumber: contactNo,
+                                  imageUrl: userImage,
+                                ),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  const begin = Offset(1.0, 0.0);
+                                  const end = Offset.zero;
+                                  const curve = Curves.fastOutSlowIn;
+
+                                  var tween = Tween(begin: begin, end: end)
+                                      .chain(CurveTween(curve: curve));
+
+                                  return SlideTransition(
+                                    position: animation.drive(tween),
+                                    child: child,
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ))
               ],
             ),
           );

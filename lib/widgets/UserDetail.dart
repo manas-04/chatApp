@@ -26,7 +26,7 @@ class DetailInfo extends StatelessWidget {
       ),
       child: RichText(
         text: TextSpan(
-          style: GoogleFonts.raleway(
+          style: GoogleFonts.montserrat(
             fontSize: size,
             color: Colors.black,
           ),

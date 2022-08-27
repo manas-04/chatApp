@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, prefer_const_constructors_in_immutables
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/logOutDialogBox.dart';
@@ -19,6 +20,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
     return AppBar(
       automaticallyImplyLeading: backButton,
       title: Text(title),
@@ -26,7 +28,11 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
         if (showSearch == true)
           IconButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(UserInfoScreen.routeName);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => UserInfoScreen(
+                        userId: user!.uid,
+                        showEditAndDeleteButton: true,
+                      )));
             },
             icon: const Icon(Icons.person_rounded),
           ),

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../widgets/changeGroupDialogBox.dart';
+import '../widgets/changeGroupImageDialogBox.dart';
 import '../widgets/changeGroupName.dart';
 
 class GroupSettingsScreen extends StatelessWidget {

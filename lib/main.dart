@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables
 
-import 'package:chat_app/providers/messageProvider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/messageProvider.dart';
 import '../providers/stickerProvider.dart';
 import '../providers/userGroupProvider.dart';
 import '../providers/userProvider.dart';
@@ -58,7 +58,6 @@ class MyApp extends StatelessWidget {
           ArchivedScreen.routeName: (context) => ArchivedScreen(),
           GroupInfoScreen.routeName: (context) => GroupInfoScreen(),
           GroupSettingsScreen.routeName: (context) => GroupSettingsScreen(),
-          UserInfoScreen.routeName: (context) => UserInfoScreen(),
         },
         onGenerateRoute: (settings) {
           return null;

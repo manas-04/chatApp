@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:chat_app/screens/userInfoScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -53,22 +54,34 @@ class MemberTile extends StatelessWidget {
                       horizontal: 12,
                       vertical: 2,
                     ),
-                    child: ListTile(
-                        title: Text(userName),
-                        subtitle: Text(email),
-                        leading: CircleAvatar(
-                          backgroundColor:
-                              const Color.fromARGB(255, 212, 212, 212),
-                          backgroundImage: NetworkImage(userImage),
-                        ),
-                        trailing: isUserAdmin && adminId != membersList[index]
-                            ? RemoveMemberButton(
-                                memberId: membersList[index],
-                                groupCode: groupCode,
-                                user: user,
-                                parentContext: context,
-                              )
-                            : null),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => UserInfoScreen(
+                              showEditAndDeleteButton: false,
+                              userId: membersList[index],
+                            ),
+                          ),
+                        );
+                      },
+                      child: ListTile(
+                          title: Text(userName),
+                          subtitle: Text(email),
+                          leading: CircleAvatar(
+                            backgroundColor:
+                                const Color.fromARGB(255, 212, 212, 212),
+                            backgroundImage: NetworkImage(userImage),
+                          ),
+                          trailing: isUserAdmin && adminId != membersList[index]
+                              ? RemoveMemberButton(
+                                  memberId: membersList[index],
+                                  groupCode: groupCode,
+                                  user: user,
+                                  parentContext: context,
+                                )
+                              : null),
+                    ),
                   );
                 }
                 return const Center(
